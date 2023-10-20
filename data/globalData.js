@@ -127,57 +127,58 @@ $(() => {
     }
 });
 
+const videoPath = './assets/videos/';
+const picPath = './assets/images/';
 
 const VideoDataAll = [
     {
         name: "GANGSTA Opening",
-        path: "./assets/videos/GANGSTA Opening.mp4",
+        path: `${videoPath}GANGSTA Opening.mp4`,
     },{
-        name: "Opening Redo of Healer ",
-        path: "./assets/videos/Opening Redo of Healer .mp4",
+        name: "Opening Redo of Healer",
+        path: `${videoPath}Opening Redo of Healer .mp4`,
     },{
         name: "Rengoku vs Akaza",
-        path: "./assets/videos/Rengoku vs Akaza.mp4",
+        path: `${videoPath}Rengoku vs Akaza.mp4`,
     },{
         name: "terukiIntro",
-        path: "./assets/videos/terukiIntro.mp4",
+        path: `${videoPath}terukiIntro.mp4`,
     },
 ];
 
 const allPicturesData = [
-    //.\imagesPath\
     {
         type: 'chars',
         name: 'Арул',
-        png: 'assets/images/chars/Арул.png',
+        png: `${picPath}chars/Арул.png`,
     },
     {
         type: 'chars',
         name: 'Мифолий',
-        png: 'assets/images/chars/Мифолий.png',
+        png: `${picPath}chars/Мифолий.png`,
     },
     {
         type: 'chars',
         name: 'Элмар',
-        png: 'assets/images/chars/Элмар.png',
+        png: `${picPath}chars/Элмар.png`,
     },
     {
         type: 'chars',
         name: 'Юмилия',
-        png: 'assets/images/chars/Юмилия.png',
+        png: `${picPath}chars/Юмилия.png`,
     },
     {
         type: 'chars',
         name: 'Берлина',
-        png: 'assets/images/chars/Берлина.png',
+        png: `${picPath}chars/Берлина.png`,
     },
     {
         type: 'fractions',
         name: 'HeroMain',
-        png: 'assets/images/fractions/HeroMain.png',
+        png: `${picPath}fractions/HeroMain.png`,
     }, {
         type: 'fractions',
         name: 'JustBased2',
-        png: 'assets/images/fractions/JustBased2.png',
+        png: `${picPath}fractions/JustBased2.png`,
     },
 ];

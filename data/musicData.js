@@ -309,6 +309,11 @@ const MusicDataAll = [
 		type2: MusicType.music,
 	 },{
 		type: [MusicType.all,MusicType.music], 
+		name: "Funk Tribu - Phonky Tribu",
+		mp3: "Funk Tribu - Phonky Tribu.mp3", 
+		type2: MusicType.music,
+	 },{
+		type: [MusicType.all,MusicType.music], 
 		name: "Ghostface Playa - Why Not",
 		mp3: "Ghostface Playa - Why Not.mp3", 
 		type2: MusicType.music,
@@ -366,6 +371,11 @@ const MusicDataAll = [
 		type: [MusicType.all,MusicType.music], 
 		name: "Infraction, Aim To Head - Falling",
 		mp3: "Infraction, Aim To Head - Falling.mp3", 
+		type2: MusicType.music,
+	 },{
+		type: [MusicType.all,MusicType.music], 
+		name: "INTERWORLD - METAMORPHOSIS",
+		mp3: "INTERWORLD - METAMORPHOSIS.mp3", 
 		type2: MusicType.music,
 	 },{
 		type: [MusicType.all,MusicType.music], 
@@ -809,7 +819,7 @@ const MusicDataAll = [
 		type2: MusicType.anime,
 	 },{
 		type: [MusicType.all,MusicType.anime], 
-		name: "Azur Lane - (Northern Overture - Story OST",
+		name: "Azur Lane - (Northern Overture) - Story OST",
 		mp3: "Azur Lane - (Northern Overture) - Story OST.mp3", 
 		type2: MusicType.anime,
 	 },{
@@ -1004,6 +1014,11 @@ const MusicDataAll = [
 		type2: MusicType.anime,
 	 },{
 		type: [MusicType.all,MusicType.anime], 
+		name: "Onsa Media - Rightfully (Goblin Slayer OP RUS)",
+		mp3: "Onsa Media - Rightfully (Goblin Slayer OP RUS).mp3", 
+		type2: MusicType.anime,
+	 },{
+		type: [MusicType.all,MusicType.anime], 
 		name: "OST One Punch Man - THE HERO ! _Ikareru Kobushi ni Hi wo Tsukero",
 		mp3: "OST One Punch Man - THE HERO ! _Ikareru Kobushi ni Hi wo Tsukero.mp3", 
 		type2: MusicType.anime,
@@ -1064,8 +1079,8 @@ const MusicDataAll = [
 		type2: MusicType.anime,
 	 },{
 		type: [MusicType.all,MusicType.anime], 
-		name: "Повелитель 4 _ Overlord IV (OP-Русский)",
-		mp3: "Повелитель 4 _ Overlord IV (OP-Русский).mp3", 
+		name: "Повелитель 4 опенинг [HOLLOW HUNGER] (на русском)",
+		mp3: "Повелитель 4 опенинг [HOLLOW HUNGER] (на русском).mp3", 
 		type2: MusicType.anime,
 	 },{
 		type: [MusicType.all,MusicType.anime], 
@@ -1491,6 +1506,16 @@ const MusicDataAll = [
 		type: [MusicType.all,MusicType.games], 
 		name: "Shawn Lee - 20. Vendetta Bullies",
 		mp3: "Shawn Lee - 20. Vendetta Bullies.mp3", 
+		type2: MusicType.games,
+	 },{
+		type: [MusicType.all,MusicType.games], 
+		name: "Shawn Lee - Russell In The Hole ",
+		mp3: "Shawn Lee - Russell In The Hole .mp3", 
+		type2: MusicType.games,
+	 },{
+		type: [MusicType.all,MusicType.games], 
+		name: "Shawn Lee - Vendetta Nerds",
+		mp3: "Shawn Lee - Vendetta Nerds.mp3", 
 		type2: MusicType.games,
 	 },{
 		type: [MusicType.all,MusicType.games], 

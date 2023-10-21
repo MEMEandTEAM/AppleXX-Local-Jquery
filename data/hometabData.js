@@ -51,7 +51,7 @@ const HometabDataAll = [
 		crossed: 0
 	},
 	{
-		type: [HometabDataType.society],
+		type: [HometabDataType.society,HometabDataType.gameDev,HometabDataType.webCrafting],
 		name: "*v GitHub",
 		prev: `${PathTab}github-logo.png`,
 		link: "https://github.com/",
@@ -152,8 +152,8 @@ const HometabDataAll = [
 	{
 		type: [HometabDataType.anime],
 		name: "Shikimori",
-		prev: "https://shikimori.me/favicon.ico",
-		link: "https://shikimori.me/animes/status/ongoing",
+		prev: "https://shikimori.one/favicon.ico",
+		link: "https://shikimori.one/animes/status/ongoing",
 		crossed: 0
 	},
 	{
@@ -258,7 +258,7 @@ const HometabDataAll = [
 	},
 	{
 		type: [HometabDataType.marks],
-		name: "Вики старое",
+		name: "Вики старое (кринж концепт)",
 		prev: "https://justbased.netlify.app/fons/favicon.ico",
 		link: "https://justbased.netlify.app/",
 		crossed: 0
@@ -287,7 +287,7 @@ const HometabDataAll = [
 	{
 		type: [HometabDataType.webCrafting],
 		name: "Webref",
-		prev: "https://webref.ru/assets/images/book/learn-html-css_1.png",
+		prev: "https://webref.ru/themes/webref/ico/favicon.svg",
 		link: "https://webref.ru",
 		crossed: 0
 	},
@@ -442,7 +442,7 @@ const HometabDataAll = [
 	{
 		type: [HometabDataType.gameDev],
 		name: "Godot доки офф.",
-		prev: `https://docs.godotengine.org/ru/stable/_static/docs_logo.png`,
+		prev: `https://docs.godotengine.org/en/3.2/_static/docs_logo.png`,
 		link: "https://docs.godotengine.org/ru/stable/index.html#",
 		crossed: 0
 	},
@@ -558,6 +558,28 @@ const HometabDataAll = [
 		link: "https://animego.online",
 		crossed: 0
 	},
+	{
+		type: [HometabDataType.gameDev,HometabDataType.writing,HometabDataType.webCrafting],
+		name: "*v BAI chat",
+		prev: `https://beta.theb.ai/images/theb-ai-model.png`,
+		link: "https://beta.theb.ai/home",
+		crossed: 0
+	},
+	{
+		type: [HometabDataType.marks],
+		name: "Pom moe",
+		prev: `https://pom.moe/favicon.png`,
+		link: "https://pom.moe/",
+		crossed: 0
+	},
+	{
+		type: [HometabDataType.university,HometabDataType.marks],
+		name: "GPT chatbot",
+		prev: `https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/1024px-ChatGPT_logo.svg.png`,
+		link: "https://gpt-chatbot.ru/",
+		crossed: 0
+	},
+
 ];
 /*
 	{

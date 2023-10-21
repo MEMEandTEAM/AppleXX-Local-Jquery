@@ -60,7 +60,7 @@ let AppStart = () => {
 	}
 }
 
-let changePage = () =>{
+changePage = () =>{
 	$(`.page-changer.pageNotes`).click(()=>{
 		localStorage.setItem('AppPage', 'заметки');
 		AppStart();

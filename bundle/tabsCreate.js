@@ -86,7 +86,7 @@ $(() => {
 		}
 
 		let CategoryTable = $(`
-			<h3 class="mainNameText link-${ThemeSet.Primary} linkPrimary">Новая вкладка <a onclick="ResetTabs()" class="resetTabs nav-link"><i class="fa fa-download"></i></a></h3>
+			<h3 class="mainNameText link-${ThemeSet.Primary} linkPrimary">Новая вкладка <a onclick="ResetTabs()" class="resetTabs nav-link"><i class="fa fa-arrows-spin"></i></a></h3>
 			<div class="row" id="iconCategoryMenu">
 				${CategoryTableList.join('')}
 			</div>
@@ -114,6 +114,7 @@ $(() => {
 	ResetTabs = () =>{
 		localStorage.removeItem('Hometab');
 		setTimeout(() =>{
+			changePage();
 			CategoryTables();
 			FullHomeTab();
 		},200);

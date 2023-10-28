@@ -116,7 +116,7 @@ $(() => {
 		setTimeout(() =>{
 			changePage();
 			CategoryTables();
-			FullHomeTab();
+			updateApp();
 		},200);
 	}
 

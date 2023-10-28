@@ -107,6 +107,9 @@ $(() => {
 				<li class="nav-item d-none">
 					<a class="nav-link page-changer pageGames">Игры</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link page-changer pageTest">Тест</a>
+				</li>
 			</ul>
 		`;
 

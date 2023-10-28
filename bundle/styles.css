@@ -614,115 +614,6 @@ ul,li{
 }
 
 
-/* ? Красивые линии градиентные */
-
-.under-line{
-
-}
-
-.borderGradient{
-}
-
-/*? Красивые нижние линии */
-
-.border-light.under-line:hover{
-	
-}
-
-.border-dark.under-line:hover{
-	
-}
-
-.border-success.under-line:hover{
-	
-}
-
-.border-warning.under-line:hover{
-	
-}
-
-.border-danger.under-line:hover{
-
-}
-
-.border-info.under-line:hover{
-	
-}
-
-.border-orange.under-line:hover{
-	
-}
-
-.border-purple.under-line:hover{
-
-}
-
-
-/*? Красивые бордеры */
-
-.border-light.borderGradient::after{
-	
-}
-
-.border-dark.borderGradient::after{
-	
-}
-
-.border-success.borderGradient::after{
-	
-}
-
-.border-warning.borderGradient::after{
-	
-}
-
-.border-danger.borderGradient::after{
-
-}
-
-.border-info.borderGradient::after{
-	
-}
-
-.border-orange.borderGradient::after{
-	
-}
-
-.border-purple.borderGradient2{
-	box-shadow: 0 0 20px var(--bs-indigo), inset 0 0 1px blue;
-	position: relative;
-}
-
-.border-purple.borderGradient2:before{
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	box-shadow: inset 0 0 0 5px red;
-	animation: animatedgradientB 5s linear infinite;
-	/*--angleBorder: 0deg;
-	border-image: linear-gradient(var(--angleBorder), #6610f2,rgb(155, 95, 253), rgba(70, 33, 129, 0.5)) 1;
-	animation: 5s animatedgradient linear infinite; */
-}
-
-@keyframes animatedgradientB {
-	0%, 100%{
-		clip: rect(0 , 300px, 10px, 0);
-	}
-	25%{
-		clip: rect(0 , 10px, 300px, 0);
-	}
-	50%{
-		clip: rect(300px , 300px, 300px, 0);
-	}
-	75%{
-		clip: rect(0 , 300px, 300px, 300px);
-	}
-}
-
-
 /* ! анимации */
 
 .looped {
@@ -1162,4 +1053,38 @@ input[type=file] {
 
 .homeTypes{
 	margin-bottom: 10px;
+}
+
+/*! ВИКИ-2*/
+
+.text-center{
+	text-align: center;
+}
+
+.carousel-caption{
+	background: linear-gradient(rgba(65, 64, 64, 0.5),rgba(19, 18, 18, 0.5)); 
+}
+
+.carousel-orange{
+	color: var(--bs-orange) !important;
+}
+
+.carousel-purple{
+	color: var(--bs-purple) !important;
+}
+
+.carousel-danger{
+	color: var(--bs-danger) !important;
+}
+
+.carousel-info{
+	color: var(--bs-info) !important;
+}
+
+.carousel-warning{
+	color: var(--bs-warning) !important;
+}
+
+.carousel-dark{
+	color: var(--bs-dark) !important;
 }

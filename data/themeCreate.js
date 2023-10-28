@@ -96,6 +96,11 @@ changePage = () =>{
 		AppStart();
 		updateApp();
 	});
+	$(`.page-changer.pageTest`).click(()=>{
+		localStorage.setItem('AppPage', 'тест');
+		AppStart();
+		updateApp();
+	});
 }
 
 let themeSetFunc = () => {
@@ -186,7 +191,7 @@ $(() =>{
 	}
 });
 
-let updateApp = () =>{
+updateApp = () =>{
 	setTimeout(() => {
 		themeSetFunc();
 		changePage();

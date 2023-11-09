@@ -567,9 +567,9 @@ const HometabDataAll = [
 	},
 	{
 		type: [HometabDataType.marks],
-		name: "Pom moe",
+		name: "Starrail Station",
 		prev: `https://pom.moe/favicon.png`,
-		link: "https://pom.moe/",
+		link: "https://starrailstation.com/ru",
 		crossed: 0
 	},
 	{

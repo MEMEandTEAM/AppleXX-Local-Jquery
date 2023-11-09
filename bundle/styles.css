@@ -968,27 +968,6 @@ input[type=file] {
 	height: 0;
 }
 
-.colorSelect,.musicSelect, .radioSelect{
-	max-width: 90%;
-	min-width: 90%;
-	margin: 5px 5%;
-	min-height: 30px;
-}
-
-.videoSelect, .pictureSelect{
-	margin: 5px 7.5%;
-	width: 85%;
-	min-height: 30rem;
-}
-
-@media (max-width: 450px) {
-	.pictureSelect, .videoSelect{
-		margin: 5px 2.5%;
-		width: 95%;
-		max-height: 25rem;
-	}
-}
-
 /*! Вики */
 .wikiFullMenu{
 	justify-content: center;
@@ -1055,7 +1034,104 @@ input[type=file] {
 	margin-bottom: 10px;
 }
 
-/*! ВИКИ-2*/
+/*! ВИКИ-2   КАРТОЧКА ПЕРСОНЖАЕЙ*/
+
+.wikiCardsMenu{
+	justify-content: space-between;
+}
+
+/*! ВИКИ-2   ТАБЛИЧКА ПЕРСОНЖАЕЙ*/
+
+.wikiMenu{
+	display: flex;
+	justify-content: space-between;
+	flex-flow: row;
+}
+
+.wikiBlock{
+	margin-bottom: 10px;
+}
+
+.editMode1{
+	margin-top: 10px;
+	display: none;
+}
+
+.editModeOn{
+	margin-top: 10px;
+	display: block;
+}
+
+.img-fluid{
+	max-height: 500px;
+}
+
+.carouselPic{
+	display: flex;
+	justify-content: center;
+}
+
+.figure{
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+}
+
+@media (max-width: 770px) {
+	.posterText{
+		order: 1;
+	}
+
+	.posterPic{
+		order: 0;
+	}
+}
+
+.colorSelect,.musicSelect, .radioSelect{
+	max-width: 90%;
+	min-width: 90%;
+	margin: 5px 5%;
+	min-height: 30px;
+}
+
+.picSelect, .dirSelect{
+	order: 0;
+}
+
+.picDelete{
+	order: 1;
+}
+
+.mainPicText, .picText{
+	order: 2;
+}
+
+.picSelect, .dirSelect, .mainPicText, .picText,.baseSelect,.subBaseSelect,.subOptionSelect,.musicTypeSelect,.musicSongSelect,.videoTypeSelect,.videoSelect{
+	min-height: 30px;
+	order: 1;
+}
+
+video, iframe{
+	min-height: 40rem;
+}
+
+@media (max-width: 770px) {
+	video, iframe{
+		min-height: 20rem;
+	}
+}
+
+@media (max-width: 770px) {
+	.pickPictureContainer{
+		justify-content: center;
+		display: flex;
+		margin-bottom: 10px;
+	}
+	.picDelete{
+		order: 3;
+	}
+}
+
 
 .text-center{
 	text-align: center;

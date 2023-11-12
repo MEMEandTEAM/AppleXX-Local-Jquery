@@ -17,12 +17,12 @@
 	<script src="/data/themeData.js"></script>
 	<script src="/data/VideoArtData.js"></script>
 	<script src="/data/globalData.js"></script>
-	<script src="/data/wikiData.js"></script>
+
 	<script src="/data/hometabData.js"></script>
 	<script src="/data/blocknoteData.js"></script>
 	<script src="/data/musicData.js"></script> 
 	<script src="/data/generatorData.js"></script>
-	<script src="/data/botData.js"></script>
+	<script src="/data/wikiTestData.js"></script>
 	
 	<!-- ! страницы -->
 	<script src="/bundle/homeCreate.js"></script>
@@ -32,16 +32,19 @@
 	<script src="/bundle/blocknoteCreate.js"></script>
 	<script src="/bundle/musicCreate.js"></script>
 	<script src="/bundle/generatorCreate.js""></script>
-	<script src="/bundle/botCreate.js"></script>
+	<script src="/bundle/wikiTest.js"></script>
 	
 	<link rel="stylesheet" href="/bundle/styles.css">
 </head>
 
 <body id="body" class="bgBody">
 	<div class="menuStart">
-		<div class="container app"></div>
-		
-		<!-- * Отрытая карточка персонажа-->
+		<div class="container app">
+
+
+
+
+			<!-- * Отрытая карточка персонажа-->
 		<div class="wikiCardOpenPage container d-none">
 			<!-- * Меню выбора категории в вики-->
 		<div class="wikiMenuCard row container">
@@ -558,7 +561,21 @@
 
 		</div>
 
-		<!-- !!! Меню карточек-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+		<!-- * Меню карточек-->
 		<div class="wikiCardsMenuPage container d-none1">
 
 			<div class="wikiMenuCard row container">
@@ -594,7 +611,7 @@
 				</button>
 
 				<div class="wikiCardsSearch col-12 row">
-					<select class="dirCategory link-dark col-md-4 col-sm-11 bgSecond bg-orange-dark mx-2" onchange="">
+					<select class="dirCategory link-dark col-md-4 col-sm-11 bgSecond bg-orange-dark" onchange="">
 						<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор категории">Выбор категории</option>
 						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
 						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
@@ -605,7 +622,7 @@
 						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
 					</select>
 
-					<select class="cardCategory link-dark col-md-4 col-sm-11 bgSecond bg-orange-dark mx-2" onchange="">
+					<select class="cardCategory link-dark col-md-4 col-sm-11 bgSecond bg-orange-dark" onchange="">
 						<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор категории 2">Выбор категории 2</option>
 						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
 						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
@@ -615,8 +632,8 @@
 						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
 						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
 					</select>
-					<div class="wikiSearch col-md-3 col-sm-12 mx-2">
-						<input type="search" class="w-100 bordered border-orange rounded" placeholder="Поиск...">
+					<div class="wikiSearch col-md-4 col-sm-12">
+						<input type="search" class="w-100 bordered border-orange rounded" placeholder="Поиск..." onblur="">
 					</div>
 
 				</div>
@@ -775,6 +792,11 @@
 
 		</div>
 
+
+
+
+
+		</div>
 	</div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>

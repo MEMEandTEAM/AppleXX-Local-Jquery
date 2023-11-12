@@ -372,6 +372,7 @@ for(note in noteTypes){
 }
 
 let allWikisGenerator = Array();
+/*
 for(wiki in wikiDataAll){
     let wikiTypeStr = wikiDataAll[wiki][1];
     let wikiPanelArr = wikiDataAll[wiki][2];
@@ -379,7 +380,7 @@ for(wiki in wikiDataAll){
         allWikisGenerator.push(...JSON.parse(localStorage.getItem(`Wiki-${wikiTypeStr}-${wikiPanel}`)));
     }
 }
-
+*/
 
 //?-------------------------------------------------
 

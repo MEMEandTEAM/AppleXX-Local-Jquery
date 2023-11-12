@@ -57,9 +57,9 @@ let AppStart = () => {
 		case "генератор":
 			FullGenerator();
 			break;
-		case "тест":
-			//FullWiki2();
-			break;
+		//case "тест":
+			FullWiki2();
+			//break;
 	}
 }
 

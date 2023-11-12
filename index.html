@@ -39,13 +39,13 @@
 
 <body id="body" class="bgBody">
 	<div class="menuStart">
-		<div class="container app">
+		<div class="container app1">
 
 
 
 
-			<!-- * Отрытая карточка персонажа-->
-		<div class="wikiCardOpenPage container d-none">
+			<!-- ! Отрытая карточка персонажа ДОБАВЬ КНОПКУ СОХРАНЕНИЯ КАРТОЧКИ1111-->
+		<div class="wikiCardOpenPage container d-none1">
 			<!-- * Меню выбора категории в вики-->
 		<div class="wikiMenuCard row container">
 			<select onchange="(this.options[this.selectedIndex].value)" class="btn btn-orange btnBtn menuNote menuNoteSelect wikiMenuSelect col-md-3 col-sm-12 mx-2 h2">
@@ -443,93 +443,92 @@
 					<button class="btn btn-outline-orange rounded col-12 deleteBlock" onclick=""><i class="fa fa-trash" aria-hidden="true"></i></button>
 				</div>
 			</div>
-
+		
 			<!-- *               Карточки (Выбор)-->
 			<div class="row wikiCardsChoice wikiBlock">
 
-				<div class="d-flex containter wikiCardsMenuShort border border-orange rounded container">
+					<div class="d-flex containter wikiCardsMenuShort border border-orange rounded container">
 
-						<div class="wikiCardFull border border-orange rounded" style="width: 18rem;">
-							<p class="d-none cardID">123</p>
-							<p class="d-none cardCategory">Chars</p>
-							<div class="wikiCard">
-								<div class="cardFront">
-									<img src="/assets/images/chars/Мифолий.png" class="card-img-top wikiCardImg" alt="...">
-									<div class="nameCard w-100 bg-dark2">
-										<h5 class="link-orange card-name">Мифолий Ле`Раферандр</h5>
+							<div class="wikiCardFull border border-orange rounded" style="width: 18rem;">
+								<p class="d-none cardID">123</p>
+								<p class="d-none cardCategory">Chars</p>
+								<div class="wikiCard">
+									<div class="cardFront">
+										<img src="/assets/images/chars/Мифолий.png" class="card-img-top wikiCardImg" alt="...">
+										<div class="nameCard w-100 bg-dark2">
+											<h5 class="link-orange card-name">Мифолий Ле`Раферандр</h5>
+										</div>
+									</div>
+									<div class="cardBack bg-dark">
+										<p class="link-orange h6">
+											Светло-зеленая кожа.
+											Среднее телосложение,
+											Длинные огненные волосы,завитые в небольшую косу.
+											Жёлтые глаза.
+											Носит жёлтые сережки(от родителей).
+											#Пара шрамов на руке
+											##Бордовый оттенок кожи
+										</p>
 									</div>
 								</div>
-								<div class="cardBack bg-dark">
-									<p class="link-orange h6">
-										Светло-зеленая кожа.
-										Среднее телосложение,
-										Длинные огненные волосы,завитые в небольшую косу.
-										Жёлтые глаза.
-										Носит жёлтые сережки(от родителей).
-										#Пара шрамов на руке
-										##Бордовый оттенок кожи
-									</p>
-								</div>
 							</div>
-						</div>
 
-						<div class="wikiCardFull border border-orange rounded" style="width: 18rem;">
-							<p class="d-none cardID">123</p>
-							<p class="d-none cardCategory">Chars</p>
-							<div class="wikiCard">
-								<div class="cardFront">
-									<img src="/assets/images/chars/Мифолий.png" class="card-img-top wikiCardImg" alt="...">
-									<div class="nameCard w-100 bg-dark2">
-										<h5 class="link-orange card-name">Мифолий Ле`Раферандр</h5>
+							<div class="wikiCardFull border border-orange rounded" style="width: 18rem;">
+								<p class="d-none cardID">123</p>
+								<p class="d-none cardCategory">Chars</p>
+								<div class="wikiCard">
+									<div class="cardFront">
+										<img src="/assets/images/chars/Мифолий.png" class="card-img-top wikiCardImg" alt="...">
+										<div class="nameCard w-100 bg-dark2">
+											<h5 class="link-orange card-name">Мифолий Ле`Раферандр</h5>
+										</div>
+									</div>
+									<div class="cardBack bg-dark">
+										<p class="link-orange h6">
+											Светло-зеленая кожа.
+											Среднее телосложение,
+											Длинные огненные волосы,завитые в небольшую косу.
+											Жёлтые глаза.
+											Носит жёлтые сережки(от родителей).
+											#Пара шрамов на руке
+											##Бордовый оттенок кожи
+										</p>
 									</div>
 								</div>
-								<div class="cardBack bg-dark">
-									<p class="link-orange h6">
-										Светло-зеленая кожа.
-										Среднее телосложение,
-										Длинные огненные волосы,завитые в небольшую косу.
-										Жёлтые глаза.
-										Носит жёлтые сережки(от родителей).
-										#Пара шрамов на руке
-										##Бордовый оттенок кожи
-									</p>
-								</div>
 							</div>
-						</div>
 
 
-				</div>
+					</div>
 
-				<div class="editMode border rounded border-orange col-12 container row">
-					<select class="cardChoiceSelect1 col-md-6 col-sm-12 link-dark bgSecond bg-orange-dark" onchange="">
-						<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор категории 1">Выбор категории 1</option>
-						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
-						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
-						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
-						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
-						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
-						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
-						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
-					</select>
+					<div class="editMode border rounded border-orange col-12 container row">
+						<select class="cardChoiceSelect1 col-md-6 col-sm-12 link-dark bgSecond bg-orange-dark" onchange="">
+							<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор категории 1">Выбор категории 1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+						</select>
 
-					<select class="cardChoiceSelect2 col-md-6 col-sm-12 link-dark bgSecond bg-orange-dark" onchange="">
-						<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор категории 2">Выбор категории 2</option>
-						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
-						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
-						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
-						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
-						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
-						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
-						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
-					</select>
-					<button class="btn btn-outline-orange rounded col-12 deleteBlock" onclick=""><i class="fa fa-trash" aria-hidden="true"></i></button>
-				</div>
+						<select class="cardChoiceSelect2 col-md-6 col-sm-12 link-dark bgSecond bg-orange-dark" onchange="">
+							<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор категории 2">Выбор категории 2</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+						</select>
+						<button class="btn btn-outline-orange rounded col-12 deleteBlock" onclick=""><i class="fa fa-trash" aria-hidden="true"></i></button>
+					</div>
 			</div>
-
-
 		</div>
 
-		<!-- !МОБИЛКА Меню добавления блока-->
+
+		<!-- !МОБИЛКА Меню добавления блока -->
 		<div class="editMode wikiMenu border border-orange rounded container">
 			<select onchange="(this.options[this.selectedIndex].value)" class="btn btn-orange btnBtn menuNote menuNoteSelect col-md-3 col-sm-12 mx-2 h2" id="blockAddType"> 
                 
@@ -571,12 +570,9 @@
 
 
 
-
-
-
         
-		<!-- * Меню карточек-->
-		<div class="wikiCardsMenuPage container d-none1">
+		<!-- ! Меню карточек   ДОБАВЬ КНОПКУ ДОБАВЛЕНИЯ КАРТОЧКИ1111-->
+		<div class="wikiCardsMenuPage container d-none">
 
 			<div class="wikiMenuCard row container">
 				<select onchange="(this.options[this.selectedIndex].value)" class="btn btn-orange btnBtn menuNote menuNoteSelect wikiMenuSelect col-md-3 col-sm-12 mx-2 h2">

@@ -1036,9 +1036,14 @@ input[type=file] {
 
 /*! ВИКИ-2   КАРТОЧКА ПЕРСОНЖАЕЙ*/
 
+.wikiCardFull{
+	margin-bottom: 10px;
+}
+
 .wikiCard{
 	position: relative;
 	cursor: pointer;
+	overflow: hidden;
 }
 
 .cardFront{
@@ -1074,6 +1079,10 @@ input[type=file] {
 	transform: rotateY(0deg);
 }
 
+.wikiCardImg{
+	min-height: 430px !important;
+}
+
 .nameCard{
 	position: absolute;
 	bottom: 0;
@@ -1085,12 +1094,36 @@ input[type=file] {
 	word-wrap: break-word;
 }
 
+
+/*! ВИКИ-2   МЕНЮ КАРТОЧЕК */
+
+.wikiMenuSelect{
+	word-wrap: break-word !important;
+}
+
+.wikiCardsSearch{
+	margin-bottom: 10px;
+}
+
+.wikiCardsMenu,.wikiCardsMenuShort{
+	padding-top: 10px;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	flex-direction: row;
+}
+
+.wikiCardsMenuShort{
+	max-height: 460px;
+	overflow-y: scroll;
+}
+
+
 /*! ВИКИ-2   ТАБЛИЧКА ПЕРСОНЖАЕЙ*/
 
-.wikiMenu{
+.wikiMenu,.wikiMenuCard{
 	display: flex;
-	justify-content: space-between;
-	flex-flow: row;
+	justify-content: space-around;
+	align-items: center;
 }
 
 .wikiBlock{

@@ -614,54 +614,6 @@ ul,li{
 }
 
 
-/* ! анимации */
-
-.looped {
-	animation: 2s linear 0s normal none infinite running Rotation;
-  	-webkit-animation: 2s linear 0s normal none infinite running Rotation;
-}
-
-.loopedY{
-	animation: 2s linear 0s normal none infinite running RotationY;
-  	-webkit-animation: 2s linear 0s normal none infinite running RotationY;
-}
-
-@keyframes Rotation {
-	0% {
-	  transform: rotate(0deg);
-	}
-	50% {
-		transform: rotate(180deg);
-	  }
-	100% {
-	  transform: rotate(360deg);
-	}
-  }
-  @-webkit-keyframes Rotation {
-	0% {
-	  transform: rotate(0deg);
-	}
-	50% {
-		transform: rotate(180deg);
-	}
-	100% {
-	  transform: rotate(360deg);
-	}
-  }
-
-  @keyframes RotationY {
-	0% {
-	  transform: rotateY(0deg);
-	}
-	50% {
-		transform: rotateY(180deg);
-	}
-	100% {
-	  transform: rotateY(360deg);
-	}
-  }
-
-
 /* ! Домашняя страница */
 
 
@@ -1034,6 +986,54 @@ input[type=file] {
 	margin-bottom: 10px;
 }
 
+/* ! анимации */
+
+.looped {
+	animation: 2s linear 0s normal none infinite running Rotation;
+  	-webkit-animation: 2s linear 0s normal none infinite running Rotation;
+}
+
+.loopedY{
+	animation: 2s linear 0s normal none infinite running RotationY;
+  	-webkit-animation: 2s linear 0s normal none infinite running RotationY;
+}
+
+@keyframes Rotation {
+	0% {
+	  transform: rotate(0deg);
+	}
+	50% {
+		transform: rotate(180deg);
+	  }
+	100% {
+	  transform: rotate(360deg);
+	}
+  }
+  @-webkit-keyframes Rotation {
+	0% {
+	  transform: rotate(0deg);
+	}
+	50% {
+		transform: rotate(180deg);
+	}
+	100% {
+	  transform: rotate(360deg);
+	}
+  }
+
+  @keyframes RotationY {
+	0% {
+	  transform: rotateY(0deg);
+	}
+	50% {
+		transform: rotateY(180deg);
+	}
+	100% {
+	  transform: rotateY(360deg);
+	}
+  }
+
+
 /*! ВИКИ-2   КАРТОЧКА ПЕРСОНЖАЕЙ*/
 
 .wikiCardFull{
@@ -1114,7 +1114,7 @@ input[type=file] {
 
 .wikiCardsMenuShort{
 	max-height: 460px;
-	overflow-y: scroll;
+	overflow-x: scroll;
 }
 
 
@@ -1127,7 +1127,30 @@ input[type=file] {
 }
 
 .wikiBlock{
+	position: relative;
 	margin-bottom: 10px;
+}
+
+.spoilerBlur > *{
+	filter: blur(25px);
+}
+
+.spoilerBlur > .spoilerBlock{
+	filter: blur(0) !important;
+	display: flex;
+}
+
+.spoilerBlurOpen > * {
+	filter: blur(0);
+}
+
+.spoilerBlock{
+	position: absolute;
+	top: 0;
+	height: 100%;
+	align-items: center;
+	display: none;
+	justify-content: center;
 }
 
 .editMode1{

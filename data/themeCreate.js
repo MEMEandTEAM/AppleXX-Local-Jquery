@@ -57,9 +57,6 @@ let AppStart = () => {
 		case "генератор":
 			FullGenerator();
 			break;
-		//case "тест":
-			FullWiki2();
-			//break;
 	}
 }
 
@@ -99,11 +96,6 @@ changePage = () =>{
 		AppStart();
 		updateApp();
 	});
-	$(`.page-changer.pageTest`).click(()=>{
-		localStorage.setItem('AppPage', 'тест');
-		AppStart();
-		updateApp();
-	});
 }
 
 let themeSetFunc = () => {
@@ -138,6 +130,7 @@ $(() =>{
 			'pillBtn': `pill-outline-${ThemeSet.Btn}`,
 			'btnOutlineBtn': `btn-outline-${ThemeSet.Btn}`,
 			'navPrim': `navbar-${ThemeSet.Nav}`,
+			'primCarousel': `carousel-${ThemeSet.Primary}`,
 		};
 		let colorsThemes = [
 			'light-dark',
@@ -187,6 +180,9 @@ $(() =>{
 				}
 				if(tag == 'btnOutlineBtn'){
 					$(`.${tag}`).removeClass(`btn-outline-${colorTheme}`);
+				}
+				if(tag == 'primCarousel'){
+					$(`.${tag}`).removeClass(`carousel-${colorTheme}`);
 				}
 			}
 			$(`.${tag}`).addClass(`${themeDict[tag]}`);

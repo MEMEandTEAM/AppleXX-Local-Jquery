@@ -39,10 +39,15 @@
 
 <body id="body" class="bgBody">
 	<div class="menuStart">
-		<div class="container app1">
+		<div class="container app">
 
-		<!-- ! Меню карточек   ДОБАВЬ СТРОКУ ПРИ ПУСТОМ МЕНЮ11111-->
-		<div class="wikiCardsMenuPage container d-none1">
+
+		</div>
+
+		<div class="container d-none">
+
+		<!-- * Меню карточек-->
+		<div class="wikiCardsMenuPage container">
 
 			<div class="wikiMenuCard row container">
 				<select onchange="(this.options[this.selectedIndex].value)" class="btn btn-orange btnBtn menuNote menuNoteSelect wikiMenuSelect col-md-3 col-sm-12 mx-2 h2">
@@ -70,7 +75,7 @@
 			
 				</select>
 
-				<h1 class="link-orange wikiCategoryName col-md-4 text-center">Животные и монстры</h1>
+				<h1 class="link-orange wikiCategoryName col-md-4 text-center">Персонажи</h1>
 
 				<button onclick="" class="btn btn-orange btnBtn col-md-3 col-sm-12 mx-2 menuNote cardAddBtn">
 					<h2><i class="fa fa-plus" aria-hidden="true"></i></h2>
@@ -106,9 +111,10 @@
 
 			</div>
 
-			<!--! Доска карточек-->
+			<!--* Доска карточек-->
 			<div class="d-flex containter wikiCardsMenu border border-orange rounded container">
 
+				<h3 class="link-orange wikiNoCards">Пусто...</h3>
 				<!--? Карточка-->
 				<div class="wikiCardFull border border-orange rounded" style="width: 18rem;" onclick="">
 					<p class="d-none cardID">123</p>
@@ -260,23 +266,12 @@
 						</div>
 					</div>
 				</div>
-
-
-
-
-
 			</div>
 
 		</div>
 
-
-		</div>
-
-		<div class="container d-none">
-
-
-				<!-- * Отрытая карточка персонажа-->
-			<div class="wikiCardOpenPage container d-none">
+		<!-- * Отрытая карточка персонажа-->
+		<div class="wikiCardOpenPage container d-none">
 				<!-- * Меню выбора категории в вики-->
 			<div class="wikiMenuCard row container">
 				<select onchange="(this.options[this.selectedIndex].value)" class="btn btn-orange btnBtn menuNote menuNoteSelect wikiMenuSelect col-md-3 col-sm-12 mx-2 h2">

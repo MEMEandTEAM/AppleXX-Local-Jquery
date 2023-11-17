@@ -1129,6 +1129,7 @@ input[type=file] {
 .wikiBlock{
 	position: relative;
 	margin-bottom: 10px;
+	transition: transform .6s linear;
 }
 
 .spoilerBlur > *{
@@ -1153,7 +1154,7 @@ input[type=file] {
 	justify-content: center;
 }
 
-.editMode1{
+.editMode{
 	margin-top: 10px;
 	display: none;
 }

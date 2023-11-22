@@ -38,3 +38,68 @@ const cardBlockTypes = {
 }
 
 //?
+
+
+
+/*
+
+данные карточки
+
+[
+    {wikiPoster: {
+        posterName: "пример",
+        posterText:"",
+        posterImg:"",
+        underPosterText:"",}
+    },
+    
+    {wikiName:{
+        wikiName: "", 
+        isSpoiler:false}
+    },
+    
+    {wikiText:{
+        wikiText: "", 
+        isSpoiler:false}
+    },
+    
+    {wikiPicText:{
+        wikiText: "",
+        wikiPic:"",
+        wikiTextUnder:"", 
+        isSpoiler:false}
+    },
+    
+    {wikiGallery:{
+        Gallery: [{galleryImg:"",galleryName:"",galleryText:""},], 
+        isSpoiler:false}
+    },
+    
+    !{wikiTextChoice:wikiText:"", isSpoiler:false},
+    
+    {wikiMusic:{
+        musicLink:"",
+        musicName:"",
+        isSpoiler:false}
+    },
+    
+    {wikiVideo:{
+        videoName:"",
+        VideoLink:"",
+        isSpoiler:false}
+    },
+    
+    {wikiYoutube:{
+        youtubeName:"",
+        youtubeLink:"https://www.youtube.com/embed/mai6TtYr4DY",
+        isSpoiler:false}
+    },
+    
+    !{wikiCardsChoice:{
+        Cards:[{}]
+        ,isSpoiler:false}
+    },
+]
+
+
+*/

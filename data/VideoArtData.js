@@ -1,5 +1,5 @@
 const videoPath = './assets/videos/';
-const picPath = './assets/images/';
+const picPath = './assets/images';
 
 const VideoDataAll = [
     {
@@ -18,33 +18,36 @@ const VideoDataAll = [
 ];
 
 const allPicturesData = [
-        {
-                type: 'chars',
-                name: 'Арул',
-                png: `${picPath}/chars/Арул.png`
-    },{
-                type: 'chars',
-                name: 'Берлина',
-                png: `${picPath}/chars/Берлина.png`
-    },{
-                type: 'chars',
-                name: 'Мифолий',
-                png: `${picPath}/chars/Мифолий.png`
-    },{
-                type: 'chars',
-                name: 'Элмар',
-                png: `${picPath}/chars/Элмар.png`
-    },{
-                type: 'chars',
-                name: 'Юмилия',
-                png: `${picPath}/chars/Юмилия.png`
-    },{
-                type: 'fractions',
-                name: 'HeroMain',
-                png: `${picPath}/fractions/HeroMain.png`
-    },{
-                type: 'fractions',
-                name: 'JustBased2',
-                png: `${picPath}/fractions/JustBased2.png`
-    },
-];
+    {
+        type: 'Chars',
+        name: 'Арул',
+        png: `${picPath}/Chars/Арул.png`
+},{
+        type: 'Chars',
+        name: 'Берлина',
+        png: `${picPath}/Chars/Берлина.png`
+},{
+        type: 'Chars',
+        name: 'Мифолий',
+        png: `${picPath}/Chars/Мифолий.png`
+},{
+        type: 'Chars',
+        name: 'Элмар',
+        png: `${picPath}/Chars/Элмар.png`
+},{
+        type: 'Chars',
+        name: 'Юмилия',
+        png: `${picPath}/Chars/Юмилия.png`
+},{
+        type: 'Fractions',
+        name: 'HeroMain',
+        png: `${picPath}/Fractions/HeroMain.png`
+},{
+        type: 'Fractions',
+        name: 'JustBased2',
+        png: `${picPath}/Fractions/JustBased2.png`
+},{
+        type: 'Storys',
+        name: 'logo',
+        png: `${picPath}/Storys/logo.png`
+},];

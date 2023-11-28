@@ -48,10 +48,11 @@ def copyVideo():
     pcopy.copy("".join(AllVideoList))
 
 def copyArt():
-    ArtList = {
-        "chars": os.listdir(f"{ArtPath}/chars/"),
-        "fractions": os.listdir(f"{ArtPath}/fractions/"),
-    }
+    listDir = os.listdir(f"{ArtPath}/")
+    ArtList = {}
+    for nameDir in listDir:
+        if not nameDir.endswith('.png'):
+            ArtList[nameDir] = os.listdir(f"{ArtPath}/{nameDir}/")
     AllArtList = []
 
     for artType in ArtList:
@@ -66,6 +67,8 @@ def copyArt():
                     png: """ + "`${picPath}/"+ artType + "/" + artPath + "`\n\t},"
                 AllArtList.append(fullArtStr)
     pcopy.copy(''.join(AllArtList))
+
+
 
 while True:
     print("Меню:\n1.Скопировать музыку\n2.Скопировать видео\n3.Скопировать арты\n4.Выход")

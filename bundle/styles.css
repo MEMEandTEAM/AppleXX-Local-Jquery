@@ -1102,7 +1102,7 @@ input[type=file] {
 	word-wrap: break-word !important;
 }
 
-.wikiCardsSearch{
+.wikiCardsSearch,.wikiSaveMenu{
 	margin-bottom: 10px;
 }
 
@@ -1162,7 +1162,7 @@ input[type=file] {
 
 .editModeOn{
 	margin-top: 10px;
-	display: block !important;
+	display: inline-block !important;
 }
 
 .navBlockBtns{

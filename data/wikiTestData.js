@@ -15,11 +15,16 @@ const wikiPages = {
 }
 
 
-//? Создаем БД под них
+//* Создаем БД под них
 for(wikiPage in wikiPages){
     if(localStorage.getItem(`Wiki-${wikiPage}`) == "" ||!JSON.parse(localStorage.getItem(`Wiki-${wikiPage}`))){
         localStorage.setItem(`Wiki-${wikiPage}`,JSON.stringify([]));
     }
+}
+
+//* создание страницы вики (для сохранения)
+if(localStorage.getItem(`WikiPage`) == "" ||!JSON.parse(localStorage.getItem(`WikiPage`))){
+    localStorage.setItem(`WikiPage`,JSON.stringify("Storys"));
 }
 
 //? категории блоков
@@ -37,9 +42,32 @@ const cardBlockTypes = {
     CardsChoice: "Карточки",
 }
 
-//?
+//? дата для select/option в меню карточек
+const wikiMenuSelectOptions = {
+    Name: "Название",
+    Race: "Раса",
+    Fraction: "Фракция",
+    Story: "История",
+    Moment: "Момент"
+};
 
 
+//? дата для select/option в постере
+let wikiPostersLocal = {};
+for(wikiPage in wikiPages){
+    let pictureList = [];
+    for(pictureID in allPicturesData){
+        let picture = allPicturesData[pictureID];
+        if(wikiPage == picture.type){
+            pictureList.push(picture);
+        }
+    }
+    wikiPostersLocal[wikiPage] = pictureList;
+}
+const wikiPostersOptions = wikiPostersLocal;
+
+
+//? дата для select/option
 
 /*
 
@@ -70,7 +98,7 @@ const cardBlockTypes = {
         isSpoiler:false}
     },
     
-    {wikiGallery:{
+    !{wikiGallery:{
         Gallery: [{galleryImg:"",galleryName:"",galleryText:""},], 
         isSpoiler:false}
     },

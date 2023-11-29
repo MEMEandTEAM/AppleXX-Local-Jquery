@@ -52,22 +52,37 @@ const wikiMenuSelectOptions = {
 };
 
 
-//? дата для select/option в постере
-let wikiPostersLocal = {};
+//? дата для select/option картинки
+let wikiPictureLocal = {};
+let fullpicturelist = [];
 for(wikiPage in wikiPages){
     let pictureList = [];
     for(pictureID in allPicturesData){
         let picture = allPicturesData[pictureID];
         if(wikiPage == picture.type){
             pictureList.push(picture);
+            fullpicturelist.push(picture);
         }
     }
-    wikiPostersLocal[wikiPage] = pictureList;
+    wikiPictureLocal[wikiPage] = pictureList;
 }
-const wikiPostersOptions = wikiPostersLocal;
+wikiPictureLocal.All = fullpicturelist;
+const wikiPicturesOptions = wikiPictureLocal;
 
-
-//? дата для select/option
+//? дата для select/option музыка
+let wikiMusicLocal = {};
+for(type in MusicType){
+    let musicList = [];
+    for(i in MusicDataAll){
+        if(MusicDataAll[i].type.includes(MusicType[type])){
+            musicList.push(MusicDataAll[i]);
+        }
+    }
+    wikiMusicLocal[type] = musicList;
+}
+const wikiMusicOptions = wikiMusicLocal;
+console.log(wikiMusicOptions.all);
+//? VideoDataAll БЕЗ ДОП блоков под видео готовое
 
 /*
 

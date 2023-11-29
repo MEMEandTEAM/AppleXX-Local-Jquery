@@ -1665,4 +1665,4 @@ let sortMusic = () => {
 	return MusicDataSorted;
 }
 
-let SortedMusic = sortMusic();
+const SortedMusic = sortMusic();

@@ -14,6 +14,15 @@ $(() => {
         return dataLoaded;
     }
 
+	let findMusicName = (musicMP3) =>{
+		for(musicID in wikiMusicOptions.all){
+			let music = wikiMusicOptions.all[musicID];
+			if(musicMP3.includes(music.mp3)){
+				return music.name;
+			}
+		}
+	}
+
 
     //----------------------------------------------------------------
     //? Элементы блоков карточки
@@ -28,20 +37,40 @@ $(() => {
         }
     }
 
-	//! функция добавления option в select
+	//? функция добавления option в select
 	fullOptionSelectList = (selectList,typeSelect) =>{
 		let optionList = [];
 		switch (typeSelect) {
+			case "options":
+				for(optionVal in selectList){
+					//КРИНЖ
+					let optionName;
+					if(optionVal == "All" || optionVal == "all"){
+						continue;
+					}
+					if(wikiPages[optionVal] != undefined){
+						optionName = wikiPages[optionVal];
+					}
+					else{
+						optionName = MusicType[optionVal];
+					}
+					optionList.push(optionSelect(optionVal,optionName,false));
+				}
+				break;
 			case "pic":
 				for(select in selectList){
 					let selectObject = selectList[select];
 					optionList.push(optionSelect(selectObject.png,selectObject.name,false));
 				}
 				break;
-			case "music": //!
+			case "music":
 				for(select in selectList){
 					let selectObject = selectList[select];
-					optionList.push(optionSelect(selectObject.png,selectObject.name,false));
+
+					//КРИНЖ
+					let musicType = selectObject.type2;
+					let musicString = `./assets/music/${musicType}/${selectObject.mp3}`;
+					optionList.push(optionSelect(musicString,selectObject.name,false));
 				}
 				break;
 			case "video":
@@ -54,6 +83,37 @@ $(() => {
 				break;
 		}
 		return `${optionList.join('')}`;
+	}
+
+	//! функция добавления сабкатегории options
+	subcategoryOptionList = (thisBlock,typeList) =>{
+		let blockWiki = $(thisBlock);
+		let blockVal = blockWiki.val();
+		console.log(blockVal);
+		let optionList;
+		switch (typeList) {
+			case "pic":
+				let picSelectBlock = blockWiki.parent().children('.picSelect');
+				picSelectBlock.children().remove();
+				optionList = `
+					${optionSelect("Выбор картинки","Выбор картинки",true)}
+					${fullOptionSelectList(wikiPicturesOptions[blockVal],"pic")}
+				`;
+				$(optionList).appendTo(picSelectBlock);
+				break;
+			case "music":
+				let musicSelectBlock = blockWiki.parent().children('.musicSongSelect');
+				musicSelectBlock.children().remove();
+				optionList = `
+					${optionSelect("Выбор музыки","Выбор музыки",true)}
+					${fullOptionSelectList(wikiMusicOptions[blockVal],"music")}
+					`;
+				$(optionList).appendTo(musicSelectBlock);
+				break;
+		
+			default:
+				break;
+		}
 	}
 
     //* меню карточки
@@ -96,34 +156,34 @@ $(() => {
 			let blockElem = wikiBlock[blockType];
 			switch (blockType) {
 				case "wikiPoster":
-					openCardFull.push(cardPosterBlock(wikiCategory,blockElem['posterName'],blockElem['posterText'],blockElem['posterImg'],blockElem['underPosterText']));
+					openCardFull.push(cardPosterBlock(wikiCategory,blockElem['posterName'],blockElem['posterText'],blockElem['posterImg'],blockElem['underPosterText']),wikiBlockID);
 					break;
 				case "wikiName":
-					openCardFull.push(cardNameBlock(blockElem['wikiName'],blockElem['isSpoiler']));
+					openCardFull.push(cardNameBlock(blockElem['wikiName'],blockElem['isSpoiler']),wikiBlockID);
 					break;
 				case "wikiText":
-					openCardFull.push(cardTextBlock(blockElem['wikiText'],blockElem['isSpoiler']));
+					openCardFull.push(cardTextBlock(blockElem['wikiText'],blockElem['isSpoiler']),wikiBlockID);
 					break;
 				case "wikiPicText":
-					openCardFull.push(cardPicTextBlock(blockElem['wikiText'],blockElem['wikiPic'],blockElem['wikiTextUnder'],blockElem['isSpoiler']));
+					openCardFull.push(cardPicTextBlock(blockElem['wikiText'],blockElem['wikiPic'],blockElem['wikiTextUnder'],blockElem['isSpoiler']),wikiBlockID);
 					break;
 				case "wikiGallery":
-					openCardFull.push(cardGalleryBlock(blockElem['Gallery'],blockElem['isSpoiler']));
+					openCardFull.push(cardGalleryBlock(blockElem['Gallery'],blockElem['isSpoiler'],wikiBlockID),wikiBlockID);
 					break;
 				case "wikiTextChoice":
-					openCardFull.push(cardTextChoiceBlock(blockElem['wikiText'],blockElem['isSpoiler']));
+					openCardFull.push(cardTextChoiceBlock(blockElem['wikiText'],blockElem['isSpoiler']),wikiBlockID);
 					break;
 				case "wikiMusic":
-					openCardFull.push(cardAudioBlock(blockElem['musicName'],blockElem['musicLink'],blockElem['posterImg'],blockElem['underPosterText']));
+					openCardFull.push(cardAudioBlock(blockElem['musicName'],blockElem['musicLink'],blockElem['posterImg'],blockElem['underPosterText']),wikiBlockID);
 					break;
 				case "wikiVideo":
-					openCardFull.push(cardVideoBlock(blockElem['videoName'],blockElem['VideoLink'],blockElem['isSpoiler']));
+					openCardFull.push(cardVideoBlock(blockElem['videoName'],blockElem['VideoLink'],blockElem['isSpoiler']),wikiBlockID);
 					break;
 				case "wikiYoutube":
-					openCardFull.push(cardYoutubeBlock(blockElem['youtubeName'],blockElem['youtubeLink'],blockElem['isSpoiler']));
+					openCardFull.push(cardYoutubeBlock(blockElem['youtubeName'],blockElem['youtubeLink'],blockElem['isSpoiler']),wikiBlockID);
 					break;
 				case "wikiCardsChoice":
-					openCardFull.push(cardCardsBlock(blockElem['Cards'],blockElem['isSpoiler']));
+					openCardFull.push(cardCardsBlock(blockElem['Cards'],blockElem['isSpoiler']),wikiBlockID);
 					break;
 				default:
 					openCardFull.push('');
@@ -177,41 +237,43 @@ $(() => {
 
     //!-------------------------------------------------------------
     //! блоки открытой карточки
-    let cardPosterBlock = (wikiCategory,posterName,posterText,posterImg,underPosterText) =>{
+    let cardPosterBlock = (wikiCategory,posterName,posterText,posterImg,underPosterText,blockID) =>{
 		return(`
         
         <div class="row wikiBlock wikiPoster">
-					<div class="col-md-8 col-sm-12 posterName">
-						<h2 class="editText h2 link-${ThemeSet.Primary} linkPrimary text-center" contenteditable="false">${posterName}</h2>
-					</div>
-					<div class="col-md-8 col-sm-12 posterText">
-						<p class="link-${ThemeSet.Primary} editText linkPrimary h5"  contenteditable="false">
-							${posterText}
-						</p>
-					</div>
-					<div class="col-md-4 col-sm-12 posterPic">
-						<figure class="figure">
-							<img src="${posterImg}" class="figure-img img-fluid rounded" alt="${posterName}">
-							<div class="d-none imgLinkSave">${posterImg}</div>
-							<figcaption class="figure-caption linkPrimary link-${ThemeSet.Primary} editText" contenteditable="false">${underPosterText}</figcaption>
-						</figure>
+			<div class="d-none wikiBlockID">${blockID}</div>
+			<div class="col-md-8 col-sm-12 posterName">
+				<h2 class="editText h2 link-${ThemeSet.Primary} linkPrimary text-center" contenteditable="false">${posterName}</h2>
+			</div>
+			<div class="col-md-8 col-sm-12 posterText">
+				<p class="link-${ThemeSet.Primary} editText linkPrimary h5"  contenteditable="false">
+					${posterText}
+				</p>
+			</div>
+			<div class="col-md-4 col-sm-12 posterPic">
+				<figure class="figure">
+					<img src="${posterImg}" class="figure-img img-fluid rounded" alt="${posterName}">
+					<div class="d-none imgLinkSave">${posterImg}</div>
+					<figcaption class="figure-caption linkPrimary link-${ThemeSet.Primary} editText" contenteditable="false">${underPosterText}</figcaption>
+				</figure>
 
-						<div class="editMode border border-${ThemeSet.Primary} borderPrimary rounded col-12 container">
-							<select class="picSelect link-${ThemeSet.Background} linkBack col-11 bgSecond bg-${ThemeSet.SecondBackground}" onchange="changeImgBlockWiki(this,'poster')">
-								<option class="bg-${ThemeSet.BodyBackground} ${ThemeSet.Primary} link-${ThemeSet.Primary} linkPrimary" selected value="Выбор картинки">Выбор картинки</option>
-								${fullOptionSelectList(wikiPicturesOptions[wikiCategory],"pic")}
-							</select>
-						</div>
-					</div>
+				<div class="editMode border border-${ThemeSet.Primary} borderPrimary rounded col-12 container">
+					<select class="picSelect link-${ThemeSet.Background} linkBack col-11 bgSecond bg-${ThemeSet.SecondBackground}" onchange="changeImgBlockWiki(this,'pic')">
+						<option class="bg-${ThemeSet.BodyBackground} ${ThemeSet.Primary} link-${ThemeSet.Primary} linkPrimary" selected value="Выбор картинки">Выбор картинки</option>
+						${fullOptionSelectList(wikiPicturesOptions[wikiCategory],"pic")}
+					</select>
 				</div>
+			</div>
+		</div>
         
         `);
     }
 
-    let cardNameBlock = (wikiName,isSpoiler) =>{
+    let cardNameBlock = (wikiName,isSpoiler,blockID) =>{
         return(`
         
         <div class="row wikiBlock wikiName">
+			<div class="d-none wikiBlockID">${blockID}</div>
             <div class="d-none isSpoilerBlock">${isSpoiler}</div>
             <div class="col-12">
                 <h2 class="h2 link-${ThemeSet.Primary} linkPrimary text-center editText" contenteditable="false">${wikiName}</h2>
@@ -232,10 +294,11 @@ $(() => {
         `);
     }
 
-    let cardTextBlock = (wikiText,isSpoiler) =>{
+    let cardTextBlock = (wikiText,isSpoiler,blockID) =>{
         return(`
         
         <div class="row wikiBlock wikiText">
+			<div class="d-none wikiBlockID">${blockID}</div>
             <div class="d-none isSpoilerBlock">${isSpoiler}</div>
             <p class="link-${ThemeSet.Primary} linkPrimary h5 editText" contenteditable="false">
 				${wikiText}
@@ -256,7 +319,7 @@ $(() => {
         `);
     }
 
-    let cardPicTextBlock = (wikiText,wikiPic,wikiTextUnder,isSpoiler) =>{
+    let cardPicTextBlock = (wikiText,wikiPic,wikiTextUnder,isSpoiler,blockID) =>{
         return(`
         
         <div class="row wikiBlock wikiPicText spoilerBlurOpen">
@@ -274,20 +337,13 @@ $(() => {
 				</figure>
 
                 <div class="editMode border rounded border-${ThemeSet.Primary} borderPrimary col-12 container">
-                    <select class="dirSelect link-${ThemeSet.Background} linkBack col-md-5 col-sm-11 bgSecond bg-${ThemeSet.SecondBackground}" onchange="">
+                    <select class="dirSelect link-${ThemeSet.Background} linkBack col-md-5 col-sm-11 bgSecond bg-${ThemeSet.SecondBackground}" onchange="subcategoryOptionList(this,'pic')">
                         <option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор категории">Выбор категории</option>
-                        <option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-                        <option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-                        <option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-                        <option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-                        <option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-                        <option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-                        <option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
+                        ${fullOptionSelectList(wikiPicturesOptions,"options")}
                     </select>
 
                     <select class="picSelect link-${ThemeSet.Background} linkBack col-md-5 col-sm-11 bgSecond bg-${ThemeSet.SecondBackground}" onchange="changeImgBlockWiki(this,'pic')">
                         <option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор картинки">Выбор картинки</option>
-                        ${fullOptionSelectList(wikiPicturesOptions.All,"pic")}
                     </select>
                     <div class="navBlockBtns col-sm-12 col-md-1 row">
                         <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
@@ -305,118 +361,117 @@ $(() => {
         `);
     }
 
-    let cardGalleryBlock = (isSpoiler) =>{
+
+	//* индикаторы галереи
+	let galleryIndicatorItem = (blockID,ID) =>{
+		let checkActive = "";
+		if(ID == 0){
+			checkActive = `class="active" aria-current="true"`;
+		}
+
+		return(`
+		<button type="button" data-bs-target="#carouselExampleCaptions${blockID}" data-bs-slide-to="${ID}" ${checkActive} aria-label="Картинка ${ID}"></button>
+		`);
+	}
+
+	//* Фотка галереи
+	let galleryItem = (galleryImg,galleryName,galleryText,ID) =>{
+		let activeCheck = "";
+		let dNoneCheck = "d-none";
+		if(ID == 0){
+			activeCheck = "active";
+			dNoneCheck = "";
+		}
+
+
+		return(`
+		
+		<div class="carousel-item ${activeCheck}">
+			<div class="w-100 carouselPic">
+				<img src="${galleryImg}" class="d-block img-fluid" alt="${galleryName}">
+				<div class="d-none imgLinkSave">${galleryImg}</div>
+				<div class="d-none imgLinkName">${galleryName}</div>
+				<div class="d-none imgLinkText">${galleryText}</div>
+			</div>
+			<div class="carousel-caption carousel-${ThemeSet.Primary} primCarousel ${dNoneCheck} d-md-block">
+				<h5>${galleryName}</h5>
+				<p>${galleryText}</p>
+			</div>
+		</div>
+		
+		`);
+	}
+
+	//! Меню галереи
+	let galleryEditItem = (ID) =>{
+		return(`
+		
+		<div class="pickPictureContainer container row col-12">
+
+			<select class="dirSelect link-${ThemeSet.Background} linkBack col-md-5 col-sm-11 bgSecond bg-${ThemeSet.SecondBackground}" onchange="subcategoryOptionList(this,'pic')">
+                <option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор категории">Выбор категории</option>
+                ${fullOptionSelectList(wikiPicturesOptions,"options")}
+            </select>
+
+            <select class="picSelect link-${ThemeSet.Background} linkBack col-md-5 col-sm-11 bgSecond bg-${ThemeSet.SecondBackground}" onchange="changeImgBlockWiki(this,'gallery')">
+                <option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор картинки">Выбор картинки</option>
+            </select>
+
+			<button class="btn btn-outline-${ThemeSet.Primary} btnOutlineBtn rounded col-md-1 col-sm-5 picDelete" onclick="deleteGalleryItem(this,${ID})"><i class="fa fa-minus" aria-hidden="true"></i></button>
+			<p class="mainPicText col-md-5 col-sm-11 link-${ThemeSet.Primary} linkPrimary border borderPrimary rounded border-${ThemeSet.Primary}" contenteditable="true" oninput="changeNameGallery(this,${ID})">Название</p>
+			<p class="picText col-md-5 col-sm-11 link-${ThemeSet.Primary} linkPrimary border borderPrimary rounded border-${ThemeSet.Primary}" contenteditable="true" oninput="changeTextGallery(this,${ID})">текст</p>
+			<div class="d-none galleryID">${ID}</div>
+		</div>
+		
+		`);
+	}
+
+    let cardGalleryBlock = (Gallery,isSpoiler,blockID) =>{
+		let indicatorList = [];
+		let picItemList = [];
+		let editItemList = [];
+		for(picItem in Gallery){
+			let galleryItemObject = Gallery[picItem];
+			indicatorList.push(galleryIndicatorItem(blockID,picItem));
+			picItemList.push(galleryItem(galleryItemObject.galleryImg,galleryItemObject.galleryName,galleryItemObject.galleryText,picItem));
+			editItemList.push(galleryEditItem(picItem));
+		}
+
         return(`
         
         <div class="row wikiBlock wikiGallery">
 			<div class="d-none isSpoilerBlock">${isSpoiler}</div>
-			<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+			<div class="d-none wikiBlockID">${blockID}</div>
+			<div id="carouselExampleCaptions${blockID}" class="carousel slide" data-bs-ride="carousel">
 				<div class="carousel-indicators">
-				<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-				<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-				<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+					${indicatorList.join('')}
 				</div>
-			<div class="carousel-inner">
+				<div class="carousel-inner">
 
-			    <div class="carousel-item active">
-					<div class="w-100 carouselPic">
-						<img src="${galleryImg}" class="d-block img-fluid" alt="${galleryName}">
-						<div class="d-none imgLinkSave">${galleryImg}</div>
-					</div>
-					<div class="carousel-caption carousel-${ThemeSet.Primary} primCarousel d-none d-md-block">
-						<h5>${galleryName}</h5>
-						<p>${galleryText}</p>
-					</div>
-				</div>
-
-				<div class="carousel-item">
-					<div class="w-100 carouselPic">
-						<img src="${galleryImg}" class="d-block img-fluid" alt="${galleryName}">
-						<div class="d-none imgLinkSave">${galleryImg}</div>
-					</div>
-					<div class="carousel-caption carousel-${ThemeSet.Primary} primCarousel d-none d-md-block">
-						<h5>${galleryName}</h5>
-						<p>${galleryText}</p>
-					</div>
-				</div>
+					${picItemList.join('')}
 
 				</div>
-				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"  data-bs-slide="prev">
+				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions${blockID}" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Предыдущий</span>
 				</button>
-				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"  data-bs-slide="next">
+				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions${blockID}" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Следующий</span>
 				</button>
 			</div>
 
 			<div class="editMode border borderPrimary rounded border-${ThemeSet.Primary} col-12">
-
-				<div class="pickPictureContainer container row col-12">
-					<select class="dirSelect link-${ThemeSet.Background} linkBack col-md-5 col-sm-11 bgSecond bg-${ThemeSet.SecondBackground}" onchange="">
-						<option class="bg-${ThemeSet.bodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор категории">Выбор категории</option>
-						<option class="bg-${ThemeSet.bodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					</select>
-		
-					<select class="picSelect link-${ThemeSet.Background} linkBack col-md-5 col-sm-11 bgSecond bg-${ThemeSet.SecondBackground}" onchange="">
-						<option class="${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор картинки">Выбор картинки</option>
-						<option class="${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					</select>
-
-					<button class="btn btn-outline-${ThemeSet.Primary} btnOutlineBtn rounded col-md-1 col-sm-5 picDelete" onclick=""><i class="fa fa-minus" aria-hidden="true"></i></button>
-					    <p class="mainPicText col-md-5 col-sm-11 link-${ThemeSet.Primary} linkPrimary border borderPrimary rounded border-${ThemeSet.Primary}" contenteditable="true">lorem ipsum</p>
-						<p class="picText col-md-5 col-sm-11 link-${ThemeSet.Primary} linkPrimary border borderPrimary rounded border-${ThemeSet.Primary}" contenteditable="true">lorem ipsum</p>
-					</div>
-
-					<div class="pickPictureContainer container row col-12">
-						<select class="dirSelect link-${ThemeSet.Background} linkBack col-md-5 col-sm-11 bgSecond bg-${ThemeSet.SecondBackground}" onchange="">
-							<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор категории">Выбор категории</option>
-							<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-							<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-							<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-							<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-							<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-							<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-							<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						</select>
-		
-						<select class="picSelect link-${ThemeSet.Background} linkBack col-md-5 col-sm-11 bgSecond bg-${ThemeSet.SecondBackground}" onchange="">
-							<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор картинки">Выбор картинки</option>
-							<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-							<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-							<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-							<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-							<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-							<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-							<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						</select>
-
-						<button class="btn btn-outline-${ThemeSet.Primary} btnOutlineBtn rounded col-md-1 col-sm-5 picDelete" onclick=""><i class="fa fa-minus" aria-hidden="true"></i></button>
-
-						<p class="mainPicText col-md-5 col-sm-11 link-${ThemeSet.Primary} linkPrimary border borderPrimary rounded border-${ThemeSet.Primary}" contenteditable="true">lorem ipsum</p>
-						<p class="picText col-md-5 col-sm-11 link-${ThemeSet.Primary} linkPrimary border borderPrimary rounded border-${ThemeSet.Primary}" contenteditable="true">lorem ipsum</p>
-					</div>
-
-					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 picAdd" onclick=""><i class="fa fa-plus" aria-hidden="true"></i></button>
-					<div class="navBlockBtns col-sm-12 col-md-1 row">
-						<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
-						<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
-					</div>
-					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary}" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
-					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick=""><i class="fa fa-trash" aria-hidden="true"></i></button>
+				<div class="galleryItemsMenu">
+					${editItemList.join('')}				
+				</div>
+				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 picAdd" onclick="addGalleryItem(this)"><i class="fa fa-plus" aria-hidden="true"></i></button>
+				<div class="navBlockBtns col-sm-12 col-md-1 row">
+					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+				</div>
+				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary}" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick=""><i class="fa fa-trash" aria-hidden="true"></i></button>
 				</div>
 				<div class="spoilerBlock">
 					<h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="">Спойлер</h4>
@@ -428,11 +483,12 @@ $(() => {
         `);
     }
 
-    let cardTextChoiceBlock = (wikiText,isSpoiler) =>{
+    let cardTextChoiceBlock = (wikiText,isSpoiler,blockID) =>{
         return(`
         
         <div class="row wikiTextChoice wikiBlock">
 			<div class="d-none isSpoilerBlock">${isSpoiler}</div>
+			<div class="d-none wikiBlockID">${blockID}</div>
 			<p class="link-${ThemeSet.Primary} linkPrimary text-center h3">${wikiText}</p>
 
 			<div class="editMode border borderPrimary rounded border-${ThemeSet.Primary} col-12">
@@ -487,38 +543,27 @@ $(() => {
         `);
     }
 
-    let cardAudioBlock = (musicName,musicLink,isSpoiler) =>{
+    let cardAudioBlock = (musicName,musicLink,isSpoiler,blockID) =>{
         return(`
         
         <div class="row wikiBlock wikiMusic">
 			<div class="d-none isSpoilerBlock">${isSpoiler}</div>
-			<p class="col-sm-12 col-md-6 link-${ThemeSet.Primary} linkPrimary h5 text-center">
+			<div class="d-none wikiBlockID">${blockID}</div>
+			<p class="col-sm-12 col-md-6 link-${ThemeSet.Primary} linkPrimary h5 text-center audioName">
 				${musicName}
 			</p>
 			<audio class="col-md-6 col-sm-12" controls src="${musicLink}"></audio>
+			<div class="d-none musicNameSave">${musicName}</div>
 			<div class="d-none musicLinkSave">${musicLink}</div>
 
 			<div class="editMode border rounded borderPrimary border-${ThemeSet.Primary} col-12 row container">
-				<select class="musicTypeSelect col-md-6 col-sm-12 link-${ThemeSet.Background} linkBack bgSecond bg-${ThemeSet.SecondBackground}" onchange="">
+				<select class="musicTypeSelect col-md-6 col-sm-12 link-${ThemeSet.Background} linkBack bgSecond bg-${ThemeSet.SecondBackground}" onchange="subcategoryOptionList(this,'music')">
 					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор жанра музыки">Выбор жанра музыки</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
+					${fullOptionSelectList(wikiMusicOptions,"options")}
 				</select>
 
-				<select class="musicSongSelect col-md-6 col-sm-12 link-${ThemeSet.Background} linkBack bgSecond bg-${ThemeSet.SecondBackground}" onchange="">
+				<select class="musicSongSelect col-md-6 col-sm-12 link-${ThemeSet.Background} linkBack bgSecond bg-${ThemeSet.SecondBackground}" onchange="changeMusicBlockWiki(this)">
 					<option class="bg-dark2 bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор музыки">Выбор музыки</option>
-					<option class="bg-dark2 bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-dark2 bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-dark2 bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-dark2 bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-dark2 bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-dark2 bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-dark2 bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
 				</select>
 				<div class="navBlockBtns col-sm-12 col-md-1 row">
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
@@ -535,36 +580,20 @@ $(() => {
         `);
     }
 
-    let cardVideoBlock = (videoName,VideoLink,isSpoiler) =>{
+    let cardVideoBlock = (videoName,VideoLink,isSpoiler,blockID) =>{
         return(`
         
         <div class="row wikiVideo wikiBlock">
 			<div class="d-none isSpoilerBlock">${isSpoiler}</div>
+			<div class="d-none wikiBlockID">${blockID}</div>
 			<h2 class="h2 col-12 link-${ThemeSet.Primary} linkPrimary text-center localVideoName editText" contenteditable="false">${videoName}</h2>
 			<video class="localVideo" src="${VideoLink}" controls></video>
 			<div class="d-none videoLinkSave">${VideoLink}</div>
 
 			<div class="editMode border rounded borderPrimary border-${ThemeSet.Primary} col-12 container row">
-				<select class="videoTypeSelect col-md-6 col-sm-12 link-${ThemeSet.Background} linkBack bgSecond bg-${ThemeSet.SecondBackground}" onchange="">
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор жанра видео">Выбор жанра видео</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-				</select>
-
-				<select class="videoSelect col-md-6 col-sm-12 link-${ThemeSet.Background} linkBack bgSecond bg-${ThemeSet.SecondBackground}" onchange="">
+				<select class="videoTypeSelect col-12 link-${ThemeSet.Background} linkBack bgSecond bg-${ThemeSet.SecondBackground}" onchange="changeVideoBlockWiki(this)">
 					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор видео">Выбор видео</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
+					${fullOptionSelectList(VideoDataAll,"video")}
 				</select>
 				<div class="navBlockBtns col-sm-12 col-md-1 row">
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
@@ -581,16 +610,17 @@ $(() => {
         `);
     }
 
-    let cardYoutubeBlock = (youtubeName,youtubeLink,isSpoiler) =>{
+    let cardYoutubeBlock = (youtubeName,youtubeLink,isSpoiler,blockID) =>{
         return(`
         
         <div class="row wikiYoutube wikiBlock">
 			<div class="d-none isSpoilerBlock">${isSpoiler}</div>
+			<div class="d-none wikiBlockID">${blockID}</div>
 			<h2 class="h2 col-12 link-${ThemeSet.Primary} linkPrimary text-center localYoutubeName editText" contenteditable="false">${youtubeName}</h2>
 			<iframe class="youtubeVideo" title="YouTube video player" allowfullscreen="" width="500" height="350" frameborder="0" src="${youtubeLink}"></iframe>
 			<div class="d-none youtubeLinkSave">${youtubeLink}</div>
 			<div class="editMode border rounded borderPrimary border-${ThemeSet.Primary} col-12">
-				<p class="youtubeLink col-12 link-${ThemeSet.Primary} borderPrimary linkPrimary border rounded border-${ThemeSet.Primary}" contenteditable="true">lorem ipsum</p>
+				<p class="youtubeLink col-12 link-${ThemeSet.Primary} borderPrimary linkPrimary border rounded border-${ThemeSet.Primary}" contenteditable="true" oninput="changeYoutubeBlockWiki(this)">lorem ipsum</p>
 				<div class="navBlockBtns col-sm-12 col-md-1 row">
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
@@ -606,11 +636,12 @@ $(() => {
         `);
     }
 
-    let cardCardsBlock = (isSpoiler) =>{
+    let cardCardsBlock = (isSpoiler,blockID) =>{
         return(`
         
         <div class="row wikiCardsChoice wikiBlock">
 			<div class="d-none isSpoilerBlock">${isSpoiler}</div>
+			<div class="d-none wikiBlockID">${blockID}</div>
 			<div class="d-flex containter wikiCardsMenuShort borderPrimary border border-${ThemeSet.Primary} rounded container">
 							
 				<div class="wikiCardFull border borderPrimary border-${ThemeSet.Primary} rounded" style="width: 18rem;" onclick="">
@@ -731,43 +762,56 @@ $(() => {
 		switch(wikiBlock){
 			case "wikiName":
 				wikiDataObj.push({wikiName:{
-					wikiName: "Название", 
-					isSpoiler:false}
+						wikiName: "Название", 
+						isSpoiler:false
+					}
 				});
 				break;
 			case "wikiText":
 				wikiDataObj.push({wikiText:{
-					wikiText: "Текст текст текст текст текст", 
-					isSpoiler:false}
+						wikiText: "Текст текст текст текст текст", 
+						isSpoiler:false
+					}
 				});
 				break;
 			case "wikiPicText":
 				wikiDataObj.push({wikiPicText:{
-					wikiText: "Текст текст текст текст текст",
-					wikiPic:"/assets/images/thumbnail.png",
-					wikiTextUnder:"Текст", 
-					isSpoiler:false}
+						wikiText: "Текст текст текст текст текст",
+						wikiPic:"/assets/images/thumbnail.png",
+						wikiTextUnder:"Текст", 
+						isSpoiler:false
+					}
 				});
 				break;
 			case "wikiVideo":
 				wikiDataObj.push({wikiVideo:{
-					videoName:"Название видео",
-					VideoLink:"",
-					isSpoiler:false}
+						videoName:"Название видео",
+						VideoLink:"",
+						isSpoiler:false
+					}
 				},);
 				break;
 			case "wikiMusic":
 				wikiDataObj.push({wikiMusic:{
-					musicLink:"",
-					musicName:"Музыка",
-					isSpoiler:false}
+						musicLink:"",
+						musicName:"Музыка",
+						isSpoiler:false
+					}
 				});
 				break;
 			case "wikiYoutube":
 				wikiDataObj.push({wikiYoutube:{
-					youtubeName:"Название видео",
-					youtubeLink:"",
-					isSpoiler:false}
+						youtubeName:"Название видео",
+						youtubeLink:"",
+						isSpoiler:false
+					}
+				});
+				break;
+			case "wikiGallery":
+				wikiDataObj.push({wikiGallery:{
+						Gallery: [{galleryImg:"/assets/images/thumbnail.png",galleryName:"Название",galleryText:"Текст текст текст текст текст"},], 
+						isSpoiler:false,
+					}
 				});
 				break;
 			default:
@@ -817,29 +861,103 @@ $(() => {
 	//! функции уже в блоках карточки
 
 
-	//* замена фотографии в постере и блоке картинка/текст
+	//! замена фотографии в постере и блоке картинка/текст
 	changeImgBlockWiki = (thisBlock,blockType) =>{
 		let blockWiki = $(thisBlock);
 		let blockVal = blockWiki.val();
-		let blockImg = blockWiki.parent().parent().children().children('img');
-		let blockImgLink = blockWiki.parent().parent().children().children('.imgLinkSave');
-		blockImg.attr('src',blockVal);
-		blockImgLink.text(blockVal)
-		console.log(blockImgLink.text());
-
-
+		
 		switch (blockType) {
-			case 'poster':
-				//
+			case 'gallery':
+				//!
+				let blockGalleryItem = blockWiki.parent();
+				console.log(blockGalleryItem);
 				break;
 			case 'pic':
-				//
+				let blockImg = blockWiki.parent().parent().children().children('img');
+				let blockImgLink = blockWiki.parent().parent().children().children('.imgLinkSave');
+				blockImg.attr('src',blockVal);
+				blockImgLink.text(blockVal);
 				break;
 		
 			default:
 				break;
 		}
 	}
+
+	//* замена аудио в музыке
+	changeMusicBlockWiki = (thisBlock) =>{
+		let blockWiki = $(thisBlock);
+		let blockVal = blockWiki.val();
+		let blockAudio = blockWiki.parent().parent().children('audio');
+		blockAudio.attr('src',blockVal);
+		let blockAudioLink = blockWiki.parent().parent().children('.musicLinkSave');
+		let blockNameLink = blockWiki.parent().parent().children('.musicNameSave');
+		let blockName = blockWiki.parent().parent().children('.audioName');
+		let audioName = findMusicName(blockVal);
+		blockAudioLink.text(blockVal);
+		blockNameLink.text(audioName);
+		blockName.text(audioName);
+	}
+
+	//* замена видео локальное
+	changeVideoBlockWiki = (thisBlock) =>{
+		let blockWiki = $(thisBlock);
+		let blockVal = blockWiki.val();
+		let blockVideo = blockWiki.parent().parent().children('video');
+		blockVideo.attr('src',blockVal);
+	}
+
+	//* замена ютуб видео
+	changeYoutubeBlockWiki = (thisBlock) =>{
+		let blockWiki = $(thisBlock);
+		let blockVal = blockWiki.text();
+		let blockYoutube = blockWiki.parent().parent().children('iframe');
+		let standartYoutubeStr = "https://www.youtube.com/watch?v=";
+		let newYoutubeStr = `https://www.youtube.com/embed/${blockVal.replace(standartYoutubeStr,'')}`;
+		blockYoutube.attr('src',newYoutubeStr);
+		let blockYoutubeLink = blockWiki.parent().parent().children('.youtubeLinkSave');
+		blockYoutubeLink.text(newYoutubeStr);
+	}
+
+	changeCardBlockWiki = (thisBlock) =>{
+		let blockWiki = $(thisBlock);
+		let blockVal = blockWiki.val();
+	}
+
+
+	//! Галерейные функции-----------------------------
+
+	//! смена имени галереи
+	changeNameGallery = (thisBlock,ID) =>{
+		let blockWiki = $(thisBlock);
+		let blockVal = blockWiki.text();
+	}
+	
+	//! смена текста галереи
+	changeTextGallery = (thisBlock,ID) =>{
+		let blockWiki = $(thisBlock);
+		let blockVal = blockWiki.text();
+		console.log(blockVal);
+	}
+
+	//! удаление элемента галереи
+	deleteGalleryItem = (thisBlock,ID) =>{
+		let blockWiki = $(thisBlock);
+		let blockVal = blockWiki.text();
+	}
+
+	addGalleryItem = (thisBlock) =>{
+		let blockWiki = $(thisBlock);
+		let currentID = blockWiki.parent().children('.pickPictureContainer').length;
+		let carouselIndicator = blockWiki.parent().parent().children('.carousel').children('.carousel-indicators');
+		let carousel = blockWiki.parent().parent().children('.carousel').children('.carousel-inner');
+		let carouselMenu = blockWiki.parent().children('.galleryItemsMenu');
+		let wikiBlockCurrId = blockWiki.parent().parent().children('.wikiBlockID').text();
+		$(galleryIndicatorItem(wikiBlockCurrId,currentID)).appendTo(carouselIndicator);
+		$(galleryItem("/assets/images/thumbnail.png","Название","Текст текст текст текст текст")).appendTo(carousel);
+		$(galleryEditItem(currentID)).appendTo(carouselMenu);
+	}
+
 
 
 

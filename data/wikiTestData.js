@@ -68,6 +68,7 @@ for(wikiPage in wikiPages){
 }
 wikiPictureLocal.All = fullpicturelist;
 const wikiPicturesOptions = wikiPictureLocal;
+console.log(wikiPicturesOptions);
 
 //? дата для select/option музыка
 let wikiMusicLocal = {};
@@ -81,8 +82,10 @@ for(type in MusicType){
     wikiMusicLocal[type] = musicList;
 }
 const wikiMusicOptions = wikiMusicLocal;
-console.log(wikiMusicOptions.all);
-//? VideoDataAll БЕЗ ДОП блоков под видео готовое
+console.log(wikiMusicOptions);
+
+
+//? дата для select/option card
 
 /*
 

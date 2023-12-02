@@ -8,14 +8,705 @@
 
 
 Карточки:
+- исправь стрелочки в дизайне (чтоб они всегда работали на всех экранах)
+- добавь wikiLink во всех карточках для сохранения ссылок
 - реализуй список option для выбора категории для текста (текст с выбором множественный выбор через массив из категории)
 - реализуй список выбора карточек по категории (аналогия с выбором текста)
-- добавь id под каждый блок карточки (и блокируй менять положение постера)
-- сделай компонент карточки для галереи (и меню для добаления)
-- функция добавления карточек в галерею и их меню
 - функция добавления текст в массив среди выбора категории (текст с выбором) (удобен будет для поиска)
 - функция выбора категории карточек (по аналогии текст с выбором) 
 - функция считывания данных для карточек (возьми с поиска из меню) (эт пиздкц будет)
 - функция стрелочек для перемещения блоков
-- функция удаления блока
-- сделай считывание данных с блоков по их наложению
+
+
+
+<!-- * Меню карточек-->
+<div class="wikiCardsMenuPage container d-none">
+
+			<div class="wikiMenuCard row container">
+				<select onchange="(this.options[this.selectedIndex].value)" class="btn btn-orange btnBtn menuNote menuNoteSelect wikiMenuSelect col-md-3 col-sm-12 mx-2 h2">
+					<option value="0" class="link-orange linkPrimary bgBack bg-dark" href="#" selected>Расы</option>  
+					
+					<option value="0" class="link-orange linkPrimary bgBack bg-dark" href="#">Расы</option>   
+				
+					<option value="1" class="link-orange linkPrimary bgBack bg-dark" href="#">Персонажи</option>   
+				
+					<option value="2" class="link-orange linkPrimary bgBack bg-dark" href="#">Лорные факты</option>   
+				
+					<option value="3" class="link-orange linkPrimary bgBack bg-dark" href="#">Фракции</option>   
+				
+					<option value="4" class="link-orange linkPrimary bgBack bg-dark" href="#">Сюжетные линии</option>   
+				
+					<option value="5" class="link-orange linkPrimary bgBack bg-dark" href="#">Заметки</option>   
+				
+					<option value="6" class="link-orange linkPrimary bgBack bg-dark" href="#">Моменты</option>   
+				
+					<option value="7" class="link-orange linkPrimary bgBack bg-dark" href="#">Животные и монстры</option>   
+				
+					<option value="8" class="link-orange linkPrimary bgBack bg-dark" href="#">Растения</option>   
+				
+					<option value="9" class="link-orange linkPrimary bgBack bg-dark" href="#">Магия</option>   
+			
+				</select>
+
+				<h1 class="link-orange wikiCategoryName col-md-4 text-center">Персонажи</h1>
+
+				<button onclick="" class="btn btn-orange btnBtn col-md-3 col-sm-12 mx-2 menuNote cardAddBtn">
+					<h2><i class="fa fa-plus" aria-hidden="true"></i></h2>
+				</button>
+
+				<div class="wikiCardsSearch col-12 row">
+					<select class="dirCategory link-dark col-md-4 col-sm-11 bgSecond bg-orange-dark" onchange="">
+						<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор категории">Выбор категории</option>
+						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+					</select>
+
+					<select class="cardCategory link-dark col-md-4 col-sm-11 bgSecond bg-orange-dark" onchange="">
+						<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор категории 2">Выбор категории 2</option>
+						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+						<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+					</select>
+					<div class="wikiSearch col-md-4 col-sm-12">
+						<input type="search" class="w-100 bordered border-orange borderPrimary rounded" placeholder="Поиск..." oninput="">
+					</div>
+
+				</div>
+
+			</div>
+
+			<!--* Доска карточек-->
+			<div class="d-flex containter wikiCardsMenu1 border border-orange borderPrimary rounded container">
+
+
+
+				<h3 class="link-orange linkPrimary wikiNoCards">Пусто...</h3>
+
+
+				<!--? Карточка-->
+				<div class="wikiCardFull border border-orange rounded borderPrimary" style="width: 18rem;" onclick="">
+					<p class="d-none cardID">123</p>
+					<p class="d-none cardCategory">Chars</p>
+					<div class="wikiCard">
+						<div class="cardFront">
+							<img src="/assets/images/chars/Мифолий.png" class="card-img-top wikiCardImg" alt="...">
+							<div class="nameCard w-100 bg-dark2 bgBody">
+								<h5 class="link-orange linkPrimary card-name">Мифолий Ле`Раферандр</h5>
+							</div>
+						</div>
+						<div class="cardBack bg-dark bgBack">
+							<p class="link-orange linkPrimary h6">
+								Светло-зеленая кожа.
+								Среднее телосложение,
+								Длинные огненные волосы,завитые в небольшую косу.
+								Жёлтые глаза.
+								Носит жёлтые сережки(от родителей).
+								#Пара шрамов на руке
+								##Бордовый оттенок кожи
+							</p>
+						</div>
+					</div>
+				</div>
+
+
+
+
+			</div>
+
+</div>
+
+<!-- * Отрытая карточка персонажа-->
+<div class="wikiCardOpenPage container">
+				<!-- * Меню выбора категории в вики-->
+			<div class="wikiMenuCard row container">
+				<select onchange="(this.options[this.selectedIndex].value)" class="btn btn-orange btnBtn menuNote menuNoteSelect wikiMenuSelect col-md-3 col-sm-12 mx-2 h2">
+					<option value="0" class="link-orange linkPrimary bgBack bg-dark" href="#" selected>Расы</option>  
+					
+					<option value="0" class="link-orange linkPrimary bgBack bg-dark" href="#">Расы</option>   
+				
+					<option value="1" class="link-orange linkPrimary bgBack bg-dark" href="#">Персонажи</option>   
+				
+					<option value="2" class="link-orange linkPrimary bgBack bg-dark" href="#">Лорные факты</option>   
+				
+					<option value="3" class="link-orange linkPrimary bgBack bg-dark" href="#">Фракции</option>   
+				
+					<option value="4" class="link-orange linkPrimary bgBack bg-dark" href="#">Сюжетные линии</option>   
+				
+					<option value="5" class="link-orange linkPrimary bgBack bg-dark" href="#">Заметки</option>   
+				
+					<option value="6" class="link-orange linkPrimary bgBack bg-dark" href="#">Моменты</option>   
+				
+					<option value="7" class="link-orange linkPrimary bgBack bg-dark" href="#">Животные и монстры</option>   
+				
+					<option value="8" class="link-orange linkPrimary bgBack bg-dark" href="#">Растения</option>   
+				
+					<option value="9" class="link-orange linkPrimary bgBack bg-dark" href="#">Магия</option>   
+			
+				</select>
+
+				<button onclick="" class="editCardBtn btn btn-orange btnBtn col-md-3 col-sm-12 mx-2 menuNote">
+					<h5><i class="fa fa-edit" aria-hidden="true"></i></h5>
+				</button>
+
+				<button onclick="" class="btn btn-orange btnBtn col-md-3 col-sm-12 mx-2 menuNote">
+					<h2>Меню</h2>
+				</button>
+
+				<div class="d-none wikiID"></div>
+				<div class="d-none wikiCategory"></div>
+			</div>
+
+			<!-- * Лист персонажа-->
+			<div class="container blockList border borderPrimary rounded border-orange">
+				<div class="d-none cardCategoryIDOpen">Chars</div>
+				<div class="d-none cardIDOpen">123</div>
+
+				<!-- *                      Обложка-->
+				<div class="row wikiBlock wikiPoster">
+					<div class="col-md-8 col-sm-12 posterName">
+						<h2 class="h2 link-orange linkPrimary text-center" contenteditable="false">Элмар Элмар</h2>
+					</div>
+					<div class="col-md-8 col-sm-12 posterText">
+						<p class="link-orange linkPrimary h5"  contenteditable="false">
+							Lorem ipsum dolor, sit amet consectetur adipisicing elit. Asperiores consequatur sit ducimus explicabo. Aut possimus, voluptatum magnam deserunt inventore ullam. Error dicta tenetur exercitationem quasi ullam eaque corporis beatae fugiat?
+						</p>
+					</div>
+					<div class="col-md-4 col-sm-12 posterPic">
+						<figure class="figure">
+						<img src="/assets/images/chars/Элмар.png" class="figure-img img-fluid rounded" alt="...">
+						<figcaption class="figure-caption linkPrimary link-orange" contenteditable="false">A caption for the above image.</figcaption>
+						</figure>
+
+						<div class="editMode border border-orange borderPrimary rounded col-12 container">
+							<select class="picSelect link-dark linkBack col-11 bgSecond bg-orange-dark" onchange="">
+								<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор картинки">Выбор картинки</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							</select>
+							<div class="navBlockBtns col-sm-12 col-md-1 row">
+								<button class="btn btn-outline-orange btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+								<button class="btn btn-outline-orange btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<!-- *                    Картинка с текстом-->
+				<div class="row wikiBlock wikiPicText spoilerBlurOpen">
+					<div class="d-none isSpoilerBlock"></div>
+					<div class="col-md-8 col-sm-12">
+						<p class="link-orange linkPrimary h5" contenteditable="false">
+							Lorem ipsum dolor, sit amet consectetur adipisicing elit. Asperiores consequatur sit ducimus explicabo. Aut possimus, voluptatum magnam deserunt inventore ullam. Error dicta tenetur exercitationem quasi ullam eaque corporis beatae fugiat?
+						</p>
+					</div>
+					<div class="col-md-4 col-sm-12">
+						<figure class="figure">
+						<img src="/assets/images/chars/Берлина.png" class="figure-img img-fluid rounded" alt="...">
+						<figcaption class="figure-caption linkPrimary link-orange" contenteditable="false">A caption for the above image.</figcaption>
+						</figure>
+
+						<div class="editMode border rounded border-orange borderPrimary col-12 container">
+							<select class="dirSelect link-dark linkBack col-md-5 col-sm-11 bgSecond bg-orange-dark" onchange="">
+								<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор категории">Выбор категории</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							</select>
+
+							<select class="picSelect link-dark linkBack col-md-5 col-sm-11 bgSecond bg-orange-dark" onchange="">
+								<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор картинки">Выбор картинки</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							</select>
+							<div class="navBlockBtns col-sm-12 col-md-1 row">
+								<button class="btn btn-outline-orange btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+								<button class="btn btn-outline-orange btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+							</div>
+							<button class="btn btn-outline-orange btnOutlineBtn rounded col-12 spoilerBtn linkPrimary link-orange" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+							<button class="btn btn-outline-orange btnOutlineBtn rounded col-12 deleteBlock" onclick=""><i class="fa fa-trash" aria-hidden="true"></i></button>
+						</div>
+					</div>
+					<div class="spoilerBlock">
+						<h4 class="link-orange linkPrimary" onclick="">Спойлер</h4>
+					</div>
+				</div>
+
+
+				<!-- *            НАЗВАНИЕ-->
+				<div class="row wikiBlock wikiName">
+					<div class="d-none isSpoilerBlock"></div>
+					<div class="col-12">
+						<h2 class="h2 link-orange linkPrimary text-center" contenteditable="false">Название</h2>
+						<div class="editMode border border-orange borderPrimary rounded col-12 container">
+							<div class="navBlockBtns col-sm-12 col-md-1 row">
+								<button class="btn btn-outline-orange btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+								<button class="btn btn-outline-orange btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+							</div>
+							<button class="btn btn-outline-orange btnOutlineBtn rounded col-12 spoilerBtn linkPrimary link-orange" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+							<button class="btn btn-outline-orange btnOutlineBtn rounded col-12 deleteBlock" onclick=""><i class="fa fa-trash" aria-hidden="true"></i></button>
+						</div>
+					</div>
+					<div class="spoilerBlock">
+						<h4 class="link-orange linkPrimary" onclick="">Спойлер</h4>
+					</div>
+				</div>
+
+
+				<!-- *          Карусель картинок-->
+				<div class="row wikiBlock wikiGallery spoilerBlur spoilerBlurOpen">
+					<div class="d-none isSpoilerBlock"></div>
+					<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+						<div class="carousel-indicators">
+						<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+						<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+						<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+						</div>
+						<div class="carousel-inner">
+
+						<div class="carousel-item active">
+							<div class="w-100 carouselPic">
+								<img src="/assets/images/chars/Арул.png" class="d-block img-fluid" alt="...">
+							</div>
+							<div class="carousel-caption carousel-orange primCarousel d-none d-md-block">
+								<h5>Метка первого слайда</h5>
+								<p>Некоторый репрезентативный заполнитель для первого слайда.</p>
+							</div>
+
+
+							<div class="editMode pickPictureContainer galleryPickContainer container row">
+								<select class="dirSelect link-dark linkBack col-md-5 col-sm-11 bgSecond bg-orange-dark" onchange="">
+									<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор категории">Выбор категории</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								</select>
+			
+								<select class="picSelect link-dark linkBack col-md-5 col-sm-11 bgSecond bg-orange-dark" onchange="">
+									<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор картинки">Выбор картинки</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								</select>
+	
+								<button class="btn btn-outline-orange btnOutlineBtn rounded col-md-1 col-sm-5 picDelete" onclick=""><i class="fa fa-minus" aria-hidden="true"></i></button>
+							</div>
+
+
+						</div>
+
+						<div class="carousel-item">
+							<div class="editMode d-none pickPictureContainer container row">
+								<select class="dirSelect link-dark linkBack col-md-5 mx-1 col-sm-11 bgSecond bg-orange-dark" onchange="">
+									<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор категории">Выбор категории</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								</select>
+			
+								<select class="picSelect link-dark linkBack col-md-5 mx-1 col-sm-11 bgSecond bg-orange-dark" onchange="">
+									<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор картинки">Выбор картинки</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								</select>
+	
+								<button class="btn btn-outline-orange btnOutlineBtn rounded col-md-1 col-sm-5 picDelete" onclick=""><i class="fa fa-minus" aria-hidden="true"></i></button>
+							</div>
+							<div class="w-100 carouselPic">
+								<img src="/assets/images/chars/Берлина.png" class="d-block img-fluid" alt="...">
+							</div>
+							<div class="carousel-caption carousel-orange primCarousel d-none d-md-block">
+							<h5>Метка второго слайда</h5>
+							<p>Некоторый репрезентативный заполнитель для второго слайда.</p>
+							</div>
+						</div>
+
+
+						<div class="carousel-item">
+							<div class="w-100 carouselPic">
+								<img src="/assets/images/chars/Мифолий.png" class="d-block img-fluid" alt="...">
+							</div>
+							<div class="carousel-caption carousel-orange primCarousel d-none d-md-block">
+								<h5>Метка третьего слайда</h5>
+								<p>Некоторый репрезентативный заполнитель для третьего слайда.</p>
+							</div>
+							<div class="editMode pickPictureContainer galleryPickContainer container row">
+								<select class="dirSelect link-dark linkBack col-md-5 col-sm-11 bgSecond bg-orange-dark" onchange="">
+									<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор категории">Выбор категории</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								</select>
+			
+								<select class="picSelect link-dark linkBack col-md-5 col-sm-11 bgSecond bg-orange-dark" onchange="">
+									<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор картинки">Выбор картинки</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+									<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								</select>
+	
+								<button class="btn btn-outline-orange btnOutlineBtn rounded col-md-1 col-sm-5 picDelete" onclick=""><i class="fa fa-minus" aria-hidden="true"></i></button>
+							</div>
+						</div>
+
+
+						</div>
+						<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"  data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Предыдущий</span>
+						</button>
+						<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"  data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Следующий</span>
+						</button>
+					</div>
+					<div class="spoilerBlock">
+						<h4 class="link-orange linkPrimary" onclick="">Спойлер</h4>
+					</div>
+
+				</div>
+
+				<!-- *               Текст-->
+				<div class="row wikiBlock wikiText">
+					<div class="d-none isSpoilerBlock"></div>
+					<p class="link-orange linkPrimary h5" contenteditable="false">
+						Lorem ipsum dolor, sit amet consectetur adipisicing elit. Asperiores consequatur sit ducimus explicabo. Aut possimus, voluptatum magnam deserunt inventore ullam. Error dicta tenetur exercitationem quasi ullam eaque corporis beatae fugiat?
+					</p>
+					<div class="editMode border borderPrimary border-orange rounded col-12 container">
+						<div class="navBlockBtns col-sm-12 col-md-1 row">
+							<button class="btn btn-outline-orange btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+							<button class="btn btn-outline-orange btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+						</div>
+						<button class="btn btn-outline-orange btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-orange" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+						<button class="btn btn-outline-orange btnOutlineBtn rounded col-12 deleteBlock" onclick=""><i class="fa fa-trash" aria-hidden="true"></i></button>
+					</div>
+					<div class="spoilerBlock">
+						<h4 class="link-orange linkPrimary" onclick="">Спойлер</h4>
+					</div>
+				</div>
+
+				<!-- *           Аудио-->
+				<div class="row wikiBlock wikiMusic">
+					<div class="d-none isSpoilerBlock"></div>
+					<p class="col-sm-12 col-md-6 link-orange linkPrimary h5 text-center">
+						Lorem ipsum dolor, sit amet consectetur
+					</p>
+					<audio class="col-md-6 col-sm-12" controls src="./assets/music/Аниме/KICK BACK Chainsaw Man OP.mp3"></audio>
+
+					<div class="editMode border rounded borderPrimary border-orange col-12 row container">
+						<select class="musicTypeSelect col-md-6 col-sm-12 link-dark linkBack bgSecond bg-orange-dark" onchange="">
+							<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор жанра музыки">Выбор жанра музыки</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+						</select>
+
+						<select class="musicSongSelect col-md-6 col-sm-12 link-dark linkBack bgSecond bg-orange-dark" onchange="">
+							<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор музыки">Выбор музыки</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+						</select>
+						<div class="navBlockBtns col-sm-12 col-md-1 row">
+							<button class="btn btn-outline-orange btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+							<button class="btn btn-outline-orange btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+						</div>
+						<button class="btn btn-outline-orange btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-orange" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+						<button class="btn btn-outline-orange btnOutlineBtn rounded col-12 deleteBlock" onclick=""><i class="fa fa-trash" aria-hidden="true"></i></button>
+					</div>
+					<div class="spoilerBlock">
+						<h4 class="link-orange linkPrimary" onclick="">Спойлер</h4>
+					</div>
+				</div>
+
+				<!-- *               Текст (выбор)-->
+				<div class="row wikiTextChoice wikiBlock">
+					<div class="d-none isSpoilerBlock"></div>
+					<p class="link-orange linkPrimary text-center h3" >Раса</p>
+
+					<div class="editMode border borderPrimary rounded border-orange col-12">
+
+						<div class="pickPictureContainer container row col-12">
+							<select class="baseSelect link-dark linkBack col-md-4 col-sm-11 bgSecond bg-orange-dark" onchange="">
+								<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор категории (общий)">Выбор категории (общий) (расса)</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							</select>
+		
+							<select class="subBaseSelect link-dark linkBack col-md-4 col-sm-11 bgSecond bg-orange-dark" onchange="">
+								<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор Выбор из категории конкретный">Выбор из категории конкретный (эльфы)</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							</select>
+
+							<select class="subOptionSelect link-dark linkBack col-md-4 col-sm-11 bgSecond bg-orange-dark" onchange="">
+								<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор Выбор из категории конкретный">Выбор из опции (Альты)</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							</select>
+							<div class="navBlockBtns col-sm-12 col-md-1 row">
+								<button class="btn btn-outline-orange btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+								<button class="btn btn-outline-orange btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+							</div>
+							<button class="btn btn-outline-orange btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-orange" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+							<button class="btn btn-outline-orange btnOutlineBtn rounded col-12 deleteBlock" onclick=""><i class="fa fa-trash" aria-hidden="true"></i></button>
+						</div>
+					</div>
+					<div class="spoilerBlock">
+						<h4 class="link-orange linkPrimary" onclick="">Спойлер</h4>
+					</div>
+				</div>
+
+				<!-- *              Видео (локальное)-->
+				<div class="row wikiVideo wikiBlock">
+					<div class="d-none isSpoilerBlock"></div>
+					<h2 class="h2 col-12 link-orange linkPrimary text-center localVideoName" contenteditable="false">Локальное видео</h2>
+					<video class="localVideo" src="/assets/videos/GANGSTA Opening.mp4" controls></video>
+
+					<div class="editMode border rounded borderPrimary border-orange col-12 container row">
+						<select class="videoTypeSelect col-md-6 col-sm-12 link-dark linkBack bgSecond bg-orange-dark" onchange="">
+							<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор жанра видео">Выбор жанра видео</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+						</select>
+
+						<select class="videoSelect col-md-6 col-sm-12 link-dark linkBack bgSecond bg-orange-dark" onchange="">
+							<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор видео">Выбор видео</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+						</select>
+						<div class="navBlockBtns col-sm-12 col-md-1 row">
+							<button class="btn btn-outline-orange btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+							<button class="btn btn-outline-orange btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+						</div>
+						<button class="btn btn-outline-orange btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-orange" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+						<button class="btn btn-outline-orange btnOutlineBtn rounded col-12 deleteBlock" onclick=""><i class="fa fa-trash" aria-hidden="true"></i></button>
+					</div>
+					<div class="spoilerBlock">
+						<h4 class="link-orange linkPrimary" onclick="">Спойлер</h4>
+					</div>
+				</div>
+
+				<!-- *               Видео (ютуб)-->
+				<div class="row wikiYoutube wikiBlock">
+					<div class="d-none isSpoilerBlock"></div>
+					<h2 class="h2 col-12 link-orange linkPrimary text-center localYoutubeName" contenteditable="false">Ютаб видео</h2>
+				<!--	<iframe class="youtubeVideo" title="YouTube video player" allowfullscreen="" width="500" height="350" frameborder="0" src="https://www.youtube.com/embed/mai6TtYr4DY"></iframe> -->
+					<div class="editMode border rounded borderPrimary border-orange col-12">
+						<p class="youtubeLink col-12 link-orange borderPrimary linkPrimary border rounded border-orange" contenteditable="true">lorem ipsum</p>
+						<div class="navBlockBtns col-sm-12 col-md-1 row">
+							<button class="btn btn-outline-orange btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+							<button class="btn btn-outline-orange btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+						</div>
+						<button class="btn btn-outline-orange btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-orange" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+						<button class="btn btn-outline-orange btnOutlineBtn rounded col-12 deleteBlock" onclick=""><i class="fa fa-trash" aria-hidden="true"></i></button>
+					</div>
+					<div class="spoilerBlock">
+						<h4 class="link-orange linkPrimary" onclick="">Спойлер</h4>
+					</div>
+				</div>
+			
+				<!-- *               Карточки (Выбор)-->
+				<div class="row wikiCardsChoice wikiBlock">
+					<div class="d-none isSpoilerBlock"></div>
+					<div class="d-flex containter wikiCardsMenuShort borderPrimary border border-orange rounded container">
+							
+						<div class="wikiCardFull border borderPrimary border-orange rounded" style="width: 18rem;" onclick="">
+							<p class="d-none cardID">123</p>
+							<p class="d-none cardCategory">Chars</p>
+							<div class="wikiCard">
+								<div class="cardFront">
+									<img src="/assets/images/chars/Мифолий.png" class="card-img-top wikiCardImg" alt="...">
+									<div class="nameCard w-100 bg-dark2 bgSecond">
+										<h5 class="link-orange linkPrimary card-name">Мифолий Ле`Раферандр</h5>
+									</div>
+								</div>
+								<div class="cardBack bg-dark bgBack">
+									<p class="link-orange linkPrimary h6">
+										Светло-зеленая кожа.
+										Среднее телосложение,
+										Длинные огненные волосы,завитые в небольшую косу.
+										Жёлтые глаза.
+										Носит жёлтые сережки(от родителей).
+										#Пара шрамов на руке
+										##Бордовый оттенок кожи
+									</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="wikiCardFull border borderPrimary border-orange rounded" style="width: 18rem;" onclick="">
+							<p class="d-none cardID">123</p>
+							<p class="d-none cardCategory">Chars</p>
+							<div class="wikiCard">
+								<div class="cardFront">
+									<img src="/assets/images/chars/Мифолий.png" class="card-img-top wikiCardImg" alt="...">
+									<div class="nameCard w-100 bg-dark2 bgSecond">
+										<h5 class="link-orange linkPrimary card-name">Мифолий Ле`Раферандр</h5>
+									</div>
+								</div>
+								<div class="cardBack bg-dark bgBack">
+									<p class="link-orange linkPrimary h6">
+										Светло-зеленая кожа.
+										Среднее телосложение,
+										Длинные огненные волосы,завитые в небольшую косу.
+										Жёлтые глаза.
+										Носит жёлтые сережки(от родителей).
+										#Пара шрамов на руке
+										##Бордовый оттенок кожи
+									</p>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+						<div class="editMode border rounded borderPrimary border-orange col-12 container row">
+							<select class="cardChoiceSelect1 col-md-6 col-sm-12 link-dark linkBack bgSecond bg-orange-dark" onchange="">
+								<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор категории 1">Выбор категории 1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							</select>
+
+							<select class="cardChoiceSelect2 col-md-6 col-sm-12 link-dark linkBack bgSecond bg-orange-dark" onchange="">
+								<option class="bg-dark2 bgBody link-orange linkPrimary" selected value="Выбор категории 2">Выбор категории 2</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+								<option class="bg-dark2 bgBody link-orange linkPrimary" value="1">1</option>
+							</select>
+							<div class="navBlockBtns col-sm-12 col-md-1 row">
+								<button class="btn btn-outline-orange btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+								<button class="btn btn-outline-orange btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+							</div>
+							<button class="btn btn-outline-orange linkPrimary btnOutlineBtn rounded col-12 spoilerBtn link-orange" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+							<button class="btn btn-outline-orange btnOutlineBtn rounded col-12 deleteBlock" onclick=""><i class="fa fa-trash" aria-hidden="true"></i></button>
+						</div>
+						<div class="spoilerBlock">
+							<h4 class="link-orange linkPrimary" onclick="">Спойлер</h4>
+						</div>
+				</div>
+			</div>
+
+
+			<!-- * Меню добавления блока -->
+			<div class="editMode wikiMenuCard border borderPrimary border-orange rounded container row">
+				<select onchange="(this.options[this.selectedIndex].value)" class="btn btn-orange btnBtn menuNote menuNoteSelect col-md-3 col-sm-12 mx-2 h2" id="blockAddType"> 
+					
+					<option value="wikiPoster" class="link-orange linkPrimary bgBack bg-dark" href="#" selected>Постер</option>   
+				
+					<option value="wikiName" class="link-orange linkPrimary bgBack bg-dark" href="#">Название</option>   
+				
+					<option value="wikiText" class="link-orange linkPrimary bgBack bg-dark" href="#">Текст</option>   
+				
+					<option value="wikiPicText" class="link-orange linkPrimary bgBack bg-dark" href="#">Текст с картинкой</option>   
+				
+					<option value="wikiGallery" class="link-orange linkPrimary bgBack bg-dark" href="#">Галерея</option>   
+
+					<option value="wikiMusic" class="link-orange linkPrimary bgBack bg-dark" href="#">Музыка</option> 
+				
+					<option value="wikiTextChoice" class="link-orange linkPrimary bgBack bg-dark" href="#">Текст с выбором</option>   
+				
+					<option value="wikiVideo" class="link-orange linkPrimary bgBack bg-dark" href="#">Локальное видео</option>   
+				
+					<option value="wikiYoutube" class="link-orange linkPrimary bgBack bg-dark" href="#">Ютуб видео</option>   
+				
+					<option value="wikiCards" class="link-orange linkPrimary bgBack bg-dark" href="#">Выбор карточек</option>    
+			
+				</select>
+
+				<button onclick="alert(document.getElementById('blockAddType').value)" class="btn btn-orange btnBtn col-md-3 col-sm-12 mx-2 menuNote">
+					<i class="fa fa-plus" aria-hidden="true"></i>
+				</button>
+			</div>
+
+</div>

@@ -1121,6 +1121,10 @@ input[type=file] {
 
 /*! ВИКИ-2   ТАБЛИЧКА ПЕРСОНЖАЕЙ*/
 
+.justifyContent{
+	justify-content: space-around;
+}
+
 .img-fluid-short{
 	width: 100%;
 }
@@ -1224,7 +1228,7 @@ input[type=file] {
 
 .picSelect, .dirSelect, .mainPicText, .picText,.baseSelect,.subBaseSelect,.subOptionSelect,.musicTypeSelect,.musicSongSelect,.videoTypeSelect,.videoSelect{
 	min-height: 30px;
-	order: 1;
+	/*order: 1;*/
 }
 
 video, iframe{
@@ -1254,7 +1258,7 @@ video, iframe{
 }
 
 .carousel-caption{
-	background: linear-gradient(rgba(65, 64, 64, 0.5),rgba(19, 18, 18, 0.5)); 
+	background: linear-gradient(rgba(65, 64, 64, 0.9),rgba(19, 18, 18, 0.8)); 
 }
 
 .carousel-orange{

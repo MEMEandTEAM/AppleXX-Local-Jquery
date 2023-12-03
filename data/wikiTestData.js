@@ -85,7 +85,18 @@ const wikiMusicOptions = wikiMusicLocal;
 console.log(wikiMusicOptions);
 
 
-//? дата для select/option card
+//? дата для select/option выбор текста
+let wikiTextChoiceOptionsLocal = {};
+for(type in wikiPages){
+    let textChoiceListFull = JSON.parse(localStorage.getItem(`Wiki-${type}`));
+    let wikiChoiceArr = [];
+    for(choiceID in textChoiceListFull){
+        let choiceBlockString = textChoiceListFull[choiceID][0].wikiPoster.posterName;
+        wikiChoiceArr.push(choiceBlockString);
+    }
+    wikiTextChoiceOptionsLocal[type] = wikiChoiceArr;
+}
+const wikiTextChoiceOptions = wikiTextChoiceOptionsLocal;
 
 /*
 
@@ -116,12 +127,15 @@ console.log(wikiMusicOptions);
         isSpoiler:false}
     },
     
-    !{wikiGallery:{
+    {wikiGallery:{
         Gallery: [{galleryImg:"",galleryName:"",galleryText:""},], 
         isSpoiler:false}
     },
     
-    !{wikiTextChoice:wikiText:"", isSpoiler:false},
+    {wikiTextChoice:{
+        wikiTextArr:[""], 
+        isSpoiler:false}
+    }
     
     {wikiMusic:{
         musicLink:"",

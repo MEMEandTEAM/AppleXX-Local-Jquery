@@ -36,33 +36,22 @@ $(() => {
         return `<option value="${value}" class="link-${ThemeSet.Primary} linkPrimary bgBack bg-${ThemeSet.Background}">`;
     }
 
-    //? функция добавления в datalist
+    //* функция добавления в datalist
     datalistSearch = (typeSearch) =>{
         $('#searchList').children().remove();
         let dataListSmall = [];
         let datalist = loadData(JSON.parse(localStorage.getItem('WikiPage')));
-        for(data in datalist){
-        
-            switch (typeSearch) {
-                case "Name":
-                    let cardName = datalist[data][0].wikiPoster.posterName;
-                    dataListSmall.push(datalistOption(cardName));
-                    break;
-                case "Race":
-                    //!
-                    break;
-                case "Fraction":
-                    //!
-                    break;
-                case "Story":
-                    //!
-                    break;
-                case "Moment":
-                    //!
-                    break;
-
-                default:
-                    break;
+        if(typeSearch == "Name"){
+            for(data in datalist){
+                let cardName = datalist[data][0].wikiPoster.posterName;
+                dataListSmall.push(datalistOption(cardName));
+            }
+        }
+        else{
+            let newDatalist = loadData(`${typeSearch}s`);
+            for(newData in newDatalist){
+                let newCardName = newDatalist[newData][0].wikiPoster.posterName;
+                dataListSmall.push(datalistOption(newCardName));
             }
         }
         $(dataListSmall.join('')).appendTo('#searchList');
@@ -227,7 +216,25 @@ $(() => {
         
     }
 
-    //? удаление строчки при наличии карточек и обнова карточек
+    //* подфункция для считывания
+    let sortSearch = (search,cardFull) =>{
+        let isSearched = false;
+        for(cardBlockId in cardFull){
+            let cardBlock = cardFull[cardBlockId].wikiTextChoice;
+            if(cardBlock){
+                let currentTextArr = cardBlock.wikiTextArr;
+                for(textID in currentTextArr){
+                    let currentText = Object.values(currentTextArr[textID])[0];
+                    if(currentText.includes(search)){
+                        isSearched =  true;
+                    }
+                }
+            }
+        }
+        return isSearched;
+    }
+
+    //* удаление строчки при наличии карточек и обнова карточек
     checkCardPanel = (page,search) =>{
         let searchType = $('.menuSearchCategory').val();
         
@@ -247,31 +254,24 @@ $(() => {
         }
         else{
             for(cardID in cardArr){
+                let cardFull = cardArr[cardID];
                 let cardPosterObj = cardArr[cardID][0];
 
-                switch (searchType) {
-                    case "Name":
+                if(searchType == "Name"){
+                    let cardPoster = cardPosterObj.wikiPoster;
+                    if(cardPoster.posterName.includes(search)){
+                        let card = wikiCard(cardPoster.posterImg,cardPoster.posterName,cardPoster.posterText,cardID,page);
+                        //добавление карточки в меню (КРИНЖ)
+                        $(card).appendTo('.wikiCardsMenu');
+                    }
+                }
+                else{
+                    let checkSearch = sortSearch(search,cardFull);
+                    if(checkSearch){
                         let cardPoster = cardPosterObj.wikiPoster;
-                        if(cardPoster.posterName.includes(search)){
-                            let card = wikiCard(cardPoster.posterImg,cardPoster.posterName,cardPoster.posterText,cardID,page);
-                            //добавление карточки в меню (КРИНЖ)
-                            $(card).appendTo('.wikiCardsMenu');
-                        }
-                        break;
-                    case "Race":
-                        //!
-                        break;
-                    case "Fraction":
-                        //!
-                        break;
-                    case "Story":
-                        //!
-                        break;
-                    case "Moment":
-                        //!
-                        break;                
-                    default:
-                        break;
+                        let card = wikiCard(cardPoster.posterImg,cardPoster.posterName,cardPoster.posterText,cardID,page);
+                        $(card).appendTo('.wikiCardsMenu');
+                    }
                 }
             }
         }
@@ -291,8 +291,8 @@ $(() => {
         checkCardPanel(wikiPanelType,'');
     }
 
-    //? поиск карточки
-    findNameCards = (searchType,search) =>{            
+    //* поиск карточки
+    findNameCards = (searchType,search) =>{
         let wikiPanelType = $('.wikiPanelType').text();
         checkCardPanel(wikiPanelType,search);
     }

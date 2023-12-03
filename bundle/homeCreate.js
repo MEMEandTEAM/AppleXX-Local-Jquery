@@ -87,6 +87,7 @@ $(() => {
 
         let randomWikiHome = `
             <div class="mainListName generatorListCard rounded generator-randWiki border border-${ThemeSet.Background} borderBack bgPrimaryDark bg-${ThemeSet.Primary}-dark">
+                <button class="btn btn-${ThemeSet.Btn} btnBtn col-12" onclick="">Ресет локального хранилища</button>
                 <div class="row">
                     <p class="h3 col-md-6 col-sm-12 link-${ThemeSet.Background} linkBack">Вики</p>
                     <p class="h3 col-md-6 col-sm-12 link-${ThemeSet.Primary} linkPrimary generator-randWiki-val"></p>

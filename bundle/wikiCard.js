@@ -79,6 +79,11 @@ $(() => {
 					optionList.push(optionSelect(selectObject.path,selectObject.name,false));
 				}
 				break;
+			case "text":
+				for(select in selectList){
+					let textChoiceObject = selectList[select];
+					optionList.push(optionSelect(textChoiceObject,textChoiceObject,false))
+				}
 			default:
 				break;
 		}
@@ -109,7 +114,18 @@ $(() => {
 					`;
 				$(optionList).appendTo(musicSelectBlock);
 				break;
-		
+			case "text":
+				let textChoiceBlock = blockWiki.parent().children('.subTextChoiceSelect');
+				textChoiceBlock.children().remove();
+				optionList = `
+					${optionSelect("Выбор из категории","Выбор из категории",true)}
+					${fullOptionSelectList(wikiTextChoiceOptions[blockVal],"text")}
+				`;
+				$(optionList).appendTo(textChoiceBlock);
+				break;
+			case "card":
+				
+				break;
 			default:
 				break;
 		}
@@ -117,13 +133,13 @@ $(() => {
 
     //* меню карточки
     openCardMenu = (wikiCategory,wikiID) =>{
-        return(`
+		return(`
         <div class="wikiMenuCard row container">
 				<h3 class="link-${ThemeSet.Primary} text-center border rounded border-${ThemeSet.Primary} borderPrimary linkPrimary menuNote col-12 h2">
 					${wikiPages[wikiCategory]}
 				</h3>
 
-				<button onclick="toggleEditMode()" class="editCardBtn btn btn-${ThemeSet.Btn} btnBtn link-${ThemeSet.Primary} linkPrimary col-md-3 col-sm-12 mx-2 menuNote">
+				<button onclick="toggleEditMode()" class="editCardBtn btn btn-outline-${ThemeSet.Btn} btnOutlineBtn link-${ThemeSet.Primary} linkPrimary col-md-3 col-sm-12 mx-2 menuNote">
 					<h5><i class="fa fa-edit" aria-hidden="true"></i></h5>
 				</button>
 
@@ -131,11 +147,11 @@ $(() => {
 					<h2>Меню</h2>
 				</button>
 
-				<button onclick="agreeDeleteWikiCard()" class="agreeDeleteCardBtn btn btn-${ThemeSet.Btn} btnBtn link-${ThemeSet.Primary} linkPrimary col-md-3 col-sm-12 mx-2 menuNote">
+				<button onclick="agreeDeleteWikiCard()" class="agreeDeleteCardBtn btn btn-outline-${ThemeSet.Btn} btnOutlineBtn col-md-3 col-sm-12 mx-2 menuNote">
 					<h5><i class="fa fa-trash" aria-hidden="true"></i></h5>
 				</button>
 
-				<button onclick="deleteFullCardWiki('${wikiCategory}',${wikiID})" class="deleteCardBtn d-none btn btn-${ThemeSet.Btn} btnBtn link-${ThemeSet.Primary} linkPrimary col-md-3 col-sm-12 mx-2 menuNote">
+				<button onclick="deleteFullCardWiki('${wikiCategory}',${wikiID})" class="deleteCardBtn d-none btn btn-outline-${ThemeSet.Btn} btnOutlineBtn col-md-3 col-sm-12 mx-2 menuNote">
 					<h5>Точно удалить? <i class="fa fa-trash" aria-hidden="true"></i></h5>
 				</button>
 
@@ -170,7 +186,7 @@ $(() => {
 					openCardFull.push(cardGalleryBlock(blockElem['Gallery'],blockElem['isSpoiler'],wikiBlockID));
 					break;
 				case "wikiTextChoice":
-					openCardFull.push(cardTextChoiceBlock(blockElem['wikiText'],blockElem['isSpoiler'],wikiBlockID));
+					openCardFull.push(cardTextChoiceBlock(blockElem['wikiTextArr'],blockElem['isSpoiler'],wikiBlockID));
 					break;
 				case "wikiMusic":
 					openCardFull.push(cardAudioBlock(blockElem['musicName'],blockElem['musicLink'],blockElem['posterImg'],blockElem['underPosterText'],wikiBlockID));
@@ -243,7 +259,7 @@ $(() => {
 				<h2 class="editText posterName h2 link-${ThemeSet.Primary} linkPrimary text-center" contenteditable="false">${posterName}</h2>
 			</div>
 			<div class="col-md-8 col-sm-12 posterText">
-				<p class="link-${ThemeSet.Primary} editText linkPrimary h5 posterTxt"  contenteditable="false">
+				<p class="link-${ThemeSet.Primary} editText linkPrimary h4 posterTxt"  contenteditable="false">
 					${posterText}
 				</p>
 			</div>
@@ -307,7 +323,7 @@ $(() => {
         <div class="row wikiBlock wikiText ${spoilerCheck}">
 			<div class="d-none wikiBlockID">${blockID}</div>
             <div class="d-none isSpoilerBlock">${isSpoiler}</div>
-            <p class="link-${ThemeSet.Primary} linkPrimary h5 editText wikiTextTxt" contenteditable="false">
+            <p class="link-${ThemeSet.Primary} linkPrimary h4 editText wikiTextTxt" contenteditable="false">
 				${wikiText}
             </p>
             <div class="editMode border borderPrimary border-${ThemeSet.Primary} rounded col-12 container">
@@ -338,7 +354,7 @@ $(() => {
 			<div class="d-none wikiBlockID">${blockID}</div>
             <div class="d-none isSpoilerBlock">${isSpoiler}</div>
             <div class="col-md-8 col-sm-12">
-                <p class="link-${ThemeSet.Primary} linkPrimary h5 editText wikiTextTxt" contenteditable="false">
+                <p class="link-${ThemeSet.Primary} linkPrimary h4 editText wikiTextTxt" contenteditable="false">
                     ${wikiText}
                 </p>
             </div>
@@ -411,8 +427,8 @@ $(() => {
 				<div class="d-none imgLinkSave">${galleryImg}</div>
 			</div>
 			<div class="carousel-caption carousel-${ThemeSet.Primary} primCarousel ${dNoneCheck} d-md-block">
-				<h5 class="editText mainPicText" ${editText}>${galleryName}</h5>
-				<p class="editText picText" ${editText}>${galleryText}</p>
+				<h5 class="editText mainPicText h4" ${editText}>${galleryName}</h5>
+				<p class="editText picText h5" ${editText}>${galleryText}</p>
 			</div>
 			
 		</div>
@@ -435,8 +451,8 @@ $(() => {
         return(`
         
         <div class="row wikiBlock wikiGallery ${spoilerCheck}">
-			<div class="d-none isSpoilerBlock">${isSpoiler}</div>
-			<div class="d-none wikiBlockID">${blockID}</div>
+			<p class="d-none isSpoilerBlock">${isSpoiler}</p>
+			<p class="d-none wikiBlockID">${blockID}</p>
 			<div id="carouselExampleCaptions${blockID}" class="carousel slide" data-bs-ride="carousel">
 				
 				<div class="carousel-inner">
@@ -462,10 +478,9 @@ $(() => {
 				</div>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary}" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-				</div>
-				<div class="spoilerBlock">
-					<h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="">Спойлер</h4>
-				</div>
+			</div>
+			<div class="spoilerBlock">
+				<h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="">Спойлер</h4>
 			</div>
 		</div>
 
@@ -473,10 +488,31 @@ $(() => {
         `);
     }
 
-    let cardTextChoiceBlock = (wikiText,isSpoiler,blockID) =>{
+	//* выбранный текст (элемент)
+	let textChoiceItem = (textName,textChosen) =>{
+		return(`
+		
+		<li class="row textItemFull container">
+			<p class="link-${ThemeSet.Primary} editText linkPrimary text-center h3 col-md-6 col-sm-12 textItemTextName">${textName}</p>
+			<p class="link-${ThemeSet.Primary} linkPrimary text-center h3 col-md-5 col-sm-12 textItemTextChoice">${textChosen}</p>
+			<button class="editMode btn btn-${ThemeSet.Btn} btnBtn rounded col-md-1 col-sm-12 navBlock" onclick="removeTextChoice(this)"><i class="fa fa-minus" aria-hidden="true"></i></button>
+		</li>
+		
+		`);
+	}
+
+    let cardTextChoiceBlock = (wikiTextArr,isSpoiler,blockID) =>{
         let spoilerCheck = "";
 		if(isSpoiler == true){
 			spoilerCheck = "spoilerBlur";
+		}
+
+		let wikiTextArrFull = [];
+		for(wikiText in wikiTextArr){
+			let wikiTextItem = wikiTextArr[wikiText];
+			let wikiTextItemName = Object.keys(wikiTextItem)[0];
+			let wikiTextItemChoice = wikiTextItem[wikiTextItemName];
+			wikiTextArrFull.push(textChoiceItem(wikiTextItemName,wikiTextItemChoice));
 		}
 		
 		return(`
@@ -484,50 +520,27 @@ $(() => {
         <div class="row wikiBlock wikiTextChoice ${spoilerCheck}">
 			<div class="d-none isSpoilerBlock">${isSpoiler}</div>
 			<div class="d-none wikiBlockID">${blockID}</div>
-			<p class="link-${ThemeSet.Primary} linkPrimary text-center h3">${wikiText}</p>
 
+			<ul class="container choiceTextList border borderPrimary rounded border-${ThemeSet.Primary}">
+				${wikiTextArrFull.join('')}
+			</ul>
+			
 			<div class="editMode border borderPrimary rounded border-${ThemeSet.Primary} col-12">
-
-				<div class="pickPictureContainer container row col-12">
-					<select class="baseSelect link-${ThemeSet.Background} linkBack col-md-4 col-sm-11 bgSecond bg-${ThemeSet.SecondBackground}" onchange="">
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор категории (общий)">Выбор категории (общий) (расса)</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					</select>
-		
-					<select class="subBaseSelect link-${ThemeSet.Background} linkBack col-md-4 col-sm-11 bgSecond bg-${ThemeSet.SecondBackground}" onchange="">
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор Выбор из категории конкретный">Выбор из категории конкретный (эльфы)</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					</select>
-
-					<select class="subOptionSelect link-${ThemeSet.Background} linkBack col-md-4 col-sm-11 bgSecond bg-${ThemeSet.SecondBackground}" onchange="">
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор Выбор из категории конкретный">Выбор из опции (Альты)</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-						<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					</select>
-					<div class="navBlockBtns col-sm-12 col-md-1 row">
-						<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
-						<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
-					</div>
-					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary}" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
-					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+				<button class="btn btn-${ThemeSet.Btn} btnBtn rounded col-12 navBlock" onclick="addTextChoice(this)"><i class="fa fa-plus" aria-hidden="true"></i></button>
+				<select class="textChoiceSelect link-${ThemeSet.Background} linkBack col-md-5 mx-2 col-sm-11 bgSecond bg-${ThemeSet.SecondBackground}" onchange="subcategoryOptionList(this,'text')">
+					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор категории">Выбор категории</option>
+					${fullOptionSelectList(wikiTextChoiceOptions,'options')}
+				</select>
+					
+				<select class="subTextChoiceSelect link-${ThemeSet.Background} linkBack col-md-5 mx-2 col-sm-11 bgSecond bg-${ThemeSet.SecondBackground}" onchange="">
+					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор из категории">Выбор из категории</option>
+				</select>
+				<div class="navBlockBtns col-sm-12 col-md-1 row">
+					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 				</div>
+				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary}" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</div>
 			<div class="spoilerBlock">
 				<h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="">Спойлер</h4>
@@ -629,7 +642,7 @@ $(() => {
 			<iframe class="youtubeVideo" title="YouTube video player" allowfullscreen="" width="500" height="350" frameborder="0" src="${youtubeLink}"></iframe>
 			<div class="d-none youtubeLinkSave">${youtubeLink}</div>
 			<div class="editMode border rounded borderPrimary border-${ThemeSet.Primary} col-12">
-				<p class="youtubeLink col-12 link-${ThemeSet.Primary} borderPrimary linkPrimary border rounded border-${ThemeSet.Primary}" contenteditable="true" oninput="changeYoutubeBlockWiki(this)">lorem ipsum</p>
+				<p class="youtubeLink col-12 link-${ThemeSet.Primary} borderPrimary linkPrimary border rounded border-${ThemeSet.Primary}" contenteditable="true" oninput="changeYoutubeBlockWiki(this)">${youtubeLink}</p>
 				<div class="navBlockBtns col-sm-12 col-md-1 row">
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
@@ -643,6 +656,34 @@ $(() => {
 		</div>
         
         `);
+    }
+
+
+	//! карточка
+    let wikiCard = (posterImg,posterName,posterText,cardID,cardCategory) =>{
+        return(
+        `
+        
+        <div class="wikiCardFull border border-${ThemeSet.Primary} rounded borderPrimary" style="width: 18rem;" onclick="openWikiCard('${cardCategory}',${cardID})">
+			<p class="d-none cardID">${cardID}</p>
+			<p class="d-none cardCategory">${cardCategory}</p>
+			<div class="wikiCard rounded">
+				<div class="cardFront rounded">
+					<img src="${posterImg}" class="card-img-top wikiCardImg" alt="...">
+					<div class="nameCard w-100 bg-${ThemeSet.BodyBackground} bgBody">
+						<h5 class="link-${ThemeSet.Primary} linkPrimary card-name">${posterName}</h5>
+					</div>
+				</div>
+				<div class="cardBack bg-${ThemeSet.Background} bgBack rounded">
+					<p class="link-${ThemeSet.Primary} linkPrimary h6">
+						${posterText}
+					</p>
+				</div>
+			</div>
+		</div>
+
+        `
+        );
     }
 
     let cardCardsBlock = (isSpoiler,blockID) =>{
@@ -810,6 +851,9 @@ $(() => {
 			case "wikiGallery":
 				newWikiBlock = cardGalleryBlock([{galleryImg:"/assets/images/thumbnail.png",galleryName:"Название",galleryText:"Текст текст текст текст текст"},], false, blockId);
 				break;
+			case "wikiTextChoice":
+				newWikiBlock = cardTextChoiceBlock([{"Текст 1 название":"Выбор 1"},{"Текст 2 название":"Выбор 2"}], false, blockId);
+				break;
 			default:
 				break;
 		}
@@ -928,7 +972,7 @@ $(() => {
 					break;
 				case "wikiGallery":
 					let galleryArr = [];
-					let galleryItemsFull = $(wikiBlock).find('.carousel-item');//
+					let galleryItemsFull = $(wikiBlock).find('.carousel-item');
 					let galleryItemLength = galleryItemsFull.length;
 					for (let i = 0; i < galleryItemLength; i++) {
 						let galleryItemHtml = $(galleryItemsFull[i]);
@@ -948,6 +992,24 @@ $(() => {
 						}
 					});
 					break;
+				case "wikiTextChoice":
+					let wikiTextArr = [];
+					let textChoiceList = $(wikiBlock).find('.textItemFull');
+					let textChoiceListLength = textChoiceList.length;
+					for (let i = 0; i < textChoiceListLength; i++) {
+						let textChoiceElement = $(textChoiceList[i]);
+						let textChoiceName = textChoiceElement.find('.textItemTextName').text();
+						let textChoice = textChoiceElement.find('.textItemTextChoice').text();
+						let textChoiceObject = {};
+						textChoiceObject[textChoiceName] = textChoice;
+						wikiTextArr.push(textChoiceObject);
+					}
+					wikiDataObj.push({wikiTextChoice:{
+							wikiTextArr: wikiTextArr, 
+							isSpoiler:false
+						}
+					});
+					break;
 				default:
 					break;
 			}
@@ -956,26 +1018,6 @@ $(() => {
 
 		wikiData[wikiID] = wikiDataObj;
 		saveNewData(wikiCategory,wikiData);
-		
-		return;
-
-		wikiData[wikiID] = wikiDataObj;
-		saveNewData(wikiCategory,wikiData);
-
-		$('.wikiOpenCard').children().remove();
-		$(openCardWiki(wikiCategory,wikiID)).appendTo('.wikiCardOpenPage');
-		
-		//КРИНЖ
-		saveCardWiki(wikiCategory,wikiID);
-		$('.editText').attr('contenteditable','false');
-		$('.editCardBtn').removeClass('used');
-		$('.editMode').toggleClass('d-none');
-
-
-
-		//saveCardWiki(wikiCategory,wikiID);
-		//let wikiBlockListAll = $('.wikiBlock');
-		//console.log(wikiBlockListAll);  //   /\s+/
 	}
 
 	//----------------------------------
@@ -1026,6 +1068,8 @@ $(() => {
 		let blockWiki = $(thisBlock);
 		let blockVal = blockWiki.val();
 		let blockVideo = blockWiki.parent().parent().children('video');
+		let blockLink = blockWiki.parent().parent().find('.videoLinkSave');
+		blockLink.text(blockVal);
 		blockVideo.attr('src',blockVal);
 	}
 
@@ -1039,11 +1083,6 @@ $(() => {
 		blockYoutube.attr('src',newYoutubeStr);
 		let blockYoutubeLink = blockWiki.parent().parent().children('.youtubeLinkSave');
 		blockYoutubeLink.text(newYoutubeStr);
-	}
-
-	changeCardBlockWiki = (thisBlock) =>{
-		let blockWiki = $(thisBlock);
-		let blockVal = blockWiki.val();
 	}
 
 
@@ -1073,6 +1112,25 @@ $(() => {
 		$(galleryItem("/assets/images/thumbnail.png","Название","Текст текст текст текст текст",currentID)).appendTo(carousel);
 	}
 
+	//* Выбор текста функции-----------------------------
+
+	//* добавление элемента текста
+	addTextChoice = (thisBlock) =>{
+		let blockWiki = $(thisBlock);
+		let textItemChoice = blockWiki.parent().children('.subTextChoiceSelect').val();
+		let textItemList = blockWiki.parent().parent().children('.choiceTextList')
+		$(textChoiceItem("",textItemChoice)).appendTo(textItemList);
+		$('.editText').attr('contenteditable','true');
+	}
+
+	//* удаление элемента текста
+	removeTextChoice = (thisBlock) =>{
+		let blockWiki = $(thisBlock).parent();
+		blockWiki.remove();
+	}
+
+
+	//! Выбор текста карточки-----------------------------
 
 
 

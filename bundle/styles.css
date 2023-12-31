@@ -1114,7 +1114,7 @@ input[type=file] {
 }
 
 .wikiCardsMenuShort{
-	max-height: 460px;
+	max-height: 550px;
 	overflow-x: scroll;
 }
 

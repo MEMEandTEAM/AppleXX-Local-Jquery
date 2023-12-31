@@ -25,7 +25,7 @@ $(() => {
 
 
     //----------------------------------------------------------------
-    //? Элементы блоков карточки
+    //* Элементы блоков карточки
 
 	//* готовый элемент select 
     let optionSelect = (value,name,isSelected) =>{
@@ -37,7 +37,7 @@ $(() => {
         }
     }
 
-	//? функция добавления option в select
+	//* функция добавления option в select
 	fullOptionSelectList = (selectList,typeSelect) =>{
 		let optionList = [];
 		switch (typeSelect) {
@@ -84,13 +84,18 @@ $(() => {
 					let textChoiceObject = selectList[select];
 					optionList.push(optionSelect(textChoiceObject,textChoiceObject,false))
 				}
+			case "card":
+				for(select in selectList){
+					let cardChoiceObject = selectList[select];
+					optionList.push(optionSelect(cardChoiceObject,cardChoiceObject,false))
+				}
 			default:
 				break;
 		}
 		return `${optionList.join('')}`;
 	}
 
-	//! функция добавления сабкатегории options
+	//* функция добавления сабкатегории options
 	subcategoryOptionList = (thisBlock,typeList) =>{
 		let blockWiki = $(thisBlock);
 		let blockVal = blockWiki.val();
@@ -124,7 +129,13 @@ $(() => {
 				$(optionList).appendTo(textChoiceBlock);
 				break;
 			case "card":
-				
+				let cardChoiceBlock = blockWiki.parent().children('.cardChoiceSelectCard');
+				cardChoiceBlock.children().remove();
+				optionList = `
+					${optionSelect("Выбор карточки","Выбор карточки",true)}
+					${fullOptionSelectList(wikiTextChoiceOptions[blockVal],"card")}
+				`
+				$(optionList).appendTo(cardChoiceBlock);
 				break;
 			default:
 				break;
@@ -161,7 +172,7 @@ $(() => {
         `);
     }
 
-    //! открытая карточка
+    //* открытая карточка
     openCardWiki = (wikiCategory,wikiID) =>{
 		let openCardFull = [];
 		let CardData = loadData(wikiCategory)[wikiID];
@@ -216,7 +227,6 @@ $(() => {
 	let cardBlockMenu = (wikiCategory,wikiID) =>{
 		return(`
 		
-		
 		<div class="editMode wikiMenuCard border borderPrimary border-${ThemeSet.Primary} rounded container row">
 			<select onchange="(this.options[this.selectedIndex].value)" class="btn btn-${ThemeSet.Btn} btnBtn menuNote menuNoteSelect col-md-3 col-sm-12 mx-2 h2" id="blockAddType"> 
 			
@@ -236,7 +246,7 @@ $(() => {
 			
 				<option value="wikiYoutube" class="link-${ThemeSet.Primary} linkPrimary bgBack bg-${ThemeSet.Background}" href="#">Ютуб видео</option>   
 			
-				<option value="wikiCards" class="link-${ThemeSet.Primary} linkPrimary bgBack bg-${ThemeSet.Background}" href="#">Выбор карточек</option>    
+				<option value="wikiCardsChoice" class="link-${ThemeSet.Primary} linkPrimary bgBack bg-${ThemeSet.Background}" href="#">Выбор карточек</option>    
 		
 			</select>
 
@@ -249,8 +259,8 @@ $(() => {
 		`);
 	}
 
-    //!-------------------------------------------------------------
-    //! блоки открытой карточки
+    //*-------------------------------------------------------------
+    //* блоки открытой карточки
     let cardPosterBlock = (wikiCategory,posterName,posterText,posterImg,underPosterText) =>{
 		return(`
         
@@ -659,94 +669,78 @@ $(() => {
     }
 
 
-	//! карточка
+	//* карточка
     let wikiCard = (posterImg,posterName,posterText,cardID,cardCategory) =>{
         return(
         `
-        
-        <div class="wikiCardFull border border-${ThemeSet.Primary} rounded borderPrimary" style="width: 18rem;" onclick="openWikiCard('${cardCategory}',${cardID})">
-			<p class="d-none cardID">${cardID}</p>
-			<p class="d-none cardCategory">${cardCategory}</p>
-			<div class="wikiCard rounded">
-				<div class="cardFront rounded">
-					<img src="${posterImg}" class="card-img-top wikiCardImg" alt="...">
-					<div class="nameCard w-100 bg-${ThemeSet.BodyBackground} bgBody">
-						<h5 class="link-${ThemeSet.Primary} linkPrimary card-name">${posterName}</h5>
+		<div class="wikiCardShort">
+			<div class="wikiCardFull border border-${ThemeSet.Primary} rounded borderPrimary" style="width: 18rem;" onclick="openWikiCard('${cardCategory}',${cardID})">
+				<p class="d-none cardID">${cardID}</p>
+				<p class="d-none cardCategory">${cardCategory}</p>
+				<div class="wikiCard rounded">
+					<div class="cardFront rounded">
+						<img src="${posterImg}" class="card-img-top wikiCardImg" alt="...">
+						<div class="nameCard w-100 bg-${ThemeSet.BodyBackground} bgBody">
+							<h5 class="link-${ThemeSet.Primary} linkPrimary card-name">${posterName}</h5>
+						</div>
+					</div>
+					<div class="cardBack bg-${ThemeSet.Background} bgBack rounded">
+						<p class="link-${ThemeSet.Primary} linkPrimary h6">
+							${posterText}
+						</p>
 					</div>
 				</div>
-				<div class="cardBack bg-${ThemeSet.Background} bgBack rounded">
-					<p class="link-${ThemeSet.Primary} linkPrimary h6">
-						${posterText}
-					</p>
-				</div>
 			</div>
+			<button class="editMode btn btn-${ThemeSet.Btn} btnBtn rounded col-12" onclick="removeCardBlockShort(this)"><i class="fa fa-minus" aria-hidden="true"></i></button>
 		</div>
-
         `
         );
     }
 
-    let cardCardsBlock = (isSpoiler,blockID) =>{
+    let cardCardsBlock = (cardsArr,isSpoiler,blockID) =>{
         let spoilerCheck = "";
 		if(isSpoiler == true){
 			spoilerCheck = "spoilerBlur";
 		}
+
+		//*Проход по карточкам (где карточка идет как БД:Имя карточки)
+		let cardList = [];
+
+		for(cardID in cardsArr){
+			cardDataName = Object.keys(cardsArr[cardID])[0];
+			cardName = cardsArr[cardID][cardDataName];
+			cardDataFull = loadData(cardDataName);
+			for(currCardID in cardDataFull){
+				let currCardName = cardDataFull[currCardID][0]["wikiPoster"]["posterName"]; //* выводим название карточки
+				if(currCardName == cardName){
+					let cardImg = cardDataFull[currCardID][0]["wikiPoster"]["posterImg"];
+					let cardText = cardDataFull[currCardID][0]["wikiPoster"]["posterText"];
+					cardList.push(wikiCard(cardImg,currCardName,cardText,currCardID,cardDataName));
+					break;
+				}
+			}
+		}
+
 		
 		return(`
         
         <div class="row wikiBlock wikiCardsChoice ${spoilerCheck}">
-			<div class="d-none isSpoilerBlock">${isSpoiler}</div>
-			<div class="d-none wikiBlockID">${blockID}</div>
+			<p class="d-none isSpoilerBlock">${isSpoiler}</p>
+			<p class="d-none wikiBlockID">${blockID}</p>
 			<div class="d-flex containter wikiCardsMenuShort borderPrimary border border-${ThemeSet.Primary} rounded container">
-							
-				<div class="wikiCardFull border borderPrimary border-${ThemeSet.Primary} rounded" style="width: 18rem;" onclick="">
-					<p class="d-none cardID">123</p>
-					<p class="d-none cardCategory">Chars</p>
-					<div class="wikiCard">
-						<div class="cardFront">
-							<img src="/assets/images/chars/Мифолий.png" class="card-img-top wikiCardImg" alt="...">
-							<div class="nameCard w-100 bg-${ThemeSet.SecondBackground} bgSecond">
-								<h5 class="link-${ThemeSet.Primary} linkPrimary card-name">Мифолий Ле'Раферандр</h5>
-							</div>
-						</div>
-						<div class="cardBack bg-${ThemeSet.Background} bgBack">
-							<p class="link-${ThemeSet.Primary} linkPrimary h6">
-								Светло-зеленая кожа.
-								Среднее телосложение,
-								Длинные огненные волосы,завитые в небольшую косу.
-								Жёлтые глаза.
-								Носит жёлтые сережки(от родителей).
-								#Пара шрамов на руке
-								##Бордовый оттенок кожи
-							</p>
-						</div>
-					</div>
-				</div>
-
+				${cardList.join('')}
 			</div>
-
+			
 			<div class="editMode border rounded borderPrimary border-${ThemeSet.Primary} col-12 container row">
-				<select class="cardChoiceSelect1 col-md-6 col-sm-12 link-${ThemeSet.Background} linkBack bgSecond bg-${ThemeSet.SecondBackground}" onchange="">
-					<option class="bg-${ThemeSet.BodyBackground}  bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор категории 1">Выбор категории 1</option>
-					<option class="bg-${ThemeSet.BodyBackground}  bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground}  bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground}  bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
+				<select class="cardChoiceSelect col-md-5 col-sm-12 link-${ThemeSet.Background} linkBack bgSecond bg-${ThemeSet.SecondBackground}" onchange="subcategoryOptionList(this,'card')">
+					<option class="bg-${ThemeSet.BodyBackground}  bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор категории">Выбор категории</option>
+					${fullOptionSelectList(wikiTextChoiceOptions,'options')}
+							</select>
+			
+				<select class="cardChoiceSelectCard col-md-6 col-sm-12 link-${ThemeSet.Background} linkBack bgSecond bg-${ThemeSet.SecondBackground}" onchange="">
+					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор карточки">Выбор карточки</option>
 				</select>
-
-				<select class="cardChoiceSelect2 col-md-6 col-sm-12 link-${ThemeSet.Background} linkBack bgSecond bg-${ThemeSet.SecondBackground}" onchange="">
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор категории 2">Выбор категории 2</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" value="1">1</option>
-				</select>
+				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-md-1 col-sm-12 navBlock" onclick="addCardBlockShort(this)"><i class="fa fa-plus" aria-hidden="true"></i></button>
 				<div class="navBlockBtns col-sm-12 col-md-1 row">
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
@@ -767,7 +761,7 @@ $(() => {
 
     //!-------------------------------------------------------------
 
-    //! полная страница откытой карточки
+    //* полная страница откытой карточки
     fullOpenCardWiki = (wikiCategory,wikiID) =>{
         return(`
         <div class="wikiCardOpenPage container">
@@ -829,6 +823,7 @@ $(() => {
 		let openedCard = $('.wikiOpenCard');
 		let newWikiBlock;
 		let blockId = openedCard.children().length;
+
 		switch(wikiBlock){
 			case "wikiName":
 				newWikiBlock = cardNameBlock("Название", false, blockId);
@@ -853,6 +848,13 @@ $(() => {
 				break;
 			case "wikiTextChoice":
 				newWikiBlock = cardTextChoiceBlock([{"Текст 1 название":"Выбор 1"},{"Текст 2 название":"Выбор 2"}], false, blockId);
+				break;
+			case "wikiCardsChoice":
+				let wikiCardName = $('.wikiOpenCard').find('.posterName').text();
+				//КРИНЖ
+				let wikiCardObj = {};
+				wikiCardObj[wikiCategory] = wikiCardName;
+				newWikiBlock = cardCardsBlock([wikiCardObj],false,blockId);
 				break;
 			default:
 				break;
@@ -883,7 +885,7 @@ $(() => {
 	}
 
 
-	//!сохранение данных вики
+	//* сохранение данных вики
 	let saveCardWiki = (wikiCategory,wikiID) =>{
 		console.log('Сохранение карточки !');
 
@@ -1010,6 +1012,23 @@ $(() => {
 						}
 					});
 					break;
+				case "wikiCardsChoice":
+					let wikiCardsArr = [];
+					let cardList = $(wikiBlock).find('.wikiCardShort');
+					for(let i = 0; i < cardList.length; i++){
+						let currCard = cardList[i];
+						let cardData = $(currCard).find('.cardCategory').text();
+						let cardName = $(currCard).find('.card-name').text();
+						let cardObj = {};
+						cardObj[cardData] = cardName;
+						wikiCardsArr.push(cardObj);
+					}
+					wikiDataObj.push({wikiCardsChoice:{
+							Cards: wikiCardsArr, 
+							isSpoiler:false
+						}
+					});
+					break;
 				default:
 					break;
 			}
@@ -1021,10 +1040,10 @@ $(() => {
 	}
 
 	//----------------------------------
-	//! функции уже в блоках карточки
+	//* функции уже в блоках карточки
 
 
-	//? замена фотографии в постере и блоке картинка/текст
+	//* замена фотографии в постере и блоке картинка/текст
 	changeImgBlockWiki = (thisBlock,blockType) =>{
 		let blockWiki = $(thisBlock);
 		let blockVal = blockWiki.val();
@@ -1130,8 +1149,37 @@ $(() => {
 	}
 
 
-	//! Выбор текста карточки-----------------------------
+	//*Выбор карточки-----------------------------
+	
+	//* добавление карточки
+	addCardBlockShort = (thisBlock) =>{
+		let blockWiki = $(thisBlock);
 
+		let cardDataVal = blockWiki.parent().find('.cardChoiceSelect').val();
+		let cardNameVal = blockWiki.parent().find('.cardChoiceSelectCard').val();
+		
+		let currentCard = [];
+		//*Проход по карточкам (где карточка идет как БД:Имя карточки)
+		cardDataFull = loadData(cardDataVal);
+		for(currCardID in cardDataFull){
+			let currCardName = cardDataFull[currCardID][0]["wikiPoster"]["posterName"]; //* выводим название карточки
+			if(currCardName == cardNameVal){
+				let cardImg = cardDataFull[currCardID][0]["wikiPoster"]["posterImg"];
+				let cardText = cardDataFull[currCardID][0]["wikiPoster"]["posterText"];
+				currentCard.push(wikiCard(cardImg,currCardName,cardText,currCardID,cardDataVal));
+				break;
+			}
+		}
+		let cardShortMenu = blockWiki.parent().parent().find('.wikiCardsMenuShort');
+		$(currentCard.join('')).appendTo(cardShortMenu);
+
+	}
+
+	//* удаление карточки
+	removeCardBlockShort = (thisBlock) =>{
+		let blockWiki = $(thisBlock).parent();
+		blockWiki.remove();
+	}
 
 
 });

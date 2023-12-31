@@ -45,10 +45,11 @@ const cardBlockTypes = {
 //? дата для select/option в меню карточек
 const wikiMenuSelectOptions = {
     Name: "Название",
+    Char: "Персонаж",
     Race: "Раса",
     Fraction: "Фракция",
     Story: "История",
-    Moment: "Момент"
+    Moment: "Момент",
 };
 
 
@@ -155,8 +156,8 @@ const wikiTextChoiceOptions = wikiTextChoiceOptionsLocal;
         isSpoiler:false}
     },
     
-    !{wikiCardsChoice:{
-        Cards:[{}]
+    {wikiCardsChoice:{
+        Cards:[{dataBase:cardName}]
         ,isSpoiler:false}
     },
 ]

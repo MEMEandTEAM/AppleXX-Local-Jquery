@@ -76,14 +76,24 @@ $(() => {
 
     //*составление options в поиске
     let wikiMenuOptionCreate = () =>{
+        //КРИНЖ
+        let currentTypeSearch = JSON.parse(localStorage.getItem('WikiPage'));
+        $('.menuSearchCategory').children().remove();
+
         let optionList  = [];
         for(optionValue in wikiMenuSelectOptions){
+            if(`${optionValue}s` == currentTypeSearch){
+                continue;
+            }
             let optionString = wikiMenuSelectOptions[optionValue];
             optionList.push(optionSelect(optionValue,optionString,false));
         }
-        return(`
+
+        //КРИНЖ
+        $(`
+            <option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Name">Выбор категории поиска</option>
             ${optionList.join('')}
-        `);
+        `).appendTo('.menuSearchCategory');
         
     }
 
@@ -101,12 +111,10 @@ $(() => {
                 <button onclick="wikiCardAdd()" class="btn btn-${ThemeSet.Btn} btnBtn col-md-3 col-sm-12 mx-2 menuNote">
                     <h2><i class="fa fa-plus" aria-hidden="true"></i></h2>
                 </button>
-                <div class="d-none wikiPanelType"></div>
+                <p class="d-none wikiPanelType"></p>
 
                 <div class="wikiCardsSearch col-12 row">
                     <select class="menuSearchCategory link-${ThemeSet.Background} linkPrimary col-md-6 col-sm-11 bgSecond bg-${ThemeSet.SecondBackground}" onchange="datalistSearch(this.options[this.selectedIndex].value)">
-                        <option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Name">Выбор категории поиска</option>
-                        ${wikiMenuOptionCreate()}
                     </select>
                     <div class="wikiSearch col-md-6 col-sm-12">
                         <input type="search" list="searchList" class="w-100 bordered border-${ThemeSet.Primary} borderPrimary rounded" placeholder="Поиск..." oninput="findNameCards(document.getElementsByClassName('menuSearchCategory')[0].value,this.value)">
@@ -200,6 +208,7 @@ $(() => {
     //*смена категорий в localstorage
     changeCardsData = (page) =>{
         localStorage.setItem('WikiPage',JSON.stringify(page));
+        wikiMenuOptionCreate()
         changeCardsDataFunc();
     }
 
@@ -220,12 +229,26 @@ $(() => {
     let sortSearch = (search,cardFull) =>{
         let isSearched = false;
         for(cardBlockId in cardFull){
-            let cardBlock = cardFull[cardBlockId].wikiTextChoice;
-            if(cardBlock){
-                let currentTextArr = cardBlock.wikiTextArr;
+
+            //* Проверка по выбору текста
+            let cardBlockText = cardFull[cardBlockId].wikiTextChoice;
+            if(cardBlockText){
+                let currentTextArr = cardBlockText.wikiTextArr;
                 for(textID in currentTextArr){
                     let currentText = Object.values(currentTextArr[textID])[0];
                     if(currentText.includes(search)){
+                        isSearched =  true;
+                    }
+                }
+            }
+
+            //* Проверка по карточке
+            let cardBlockCards = cardFull[cardBlockId].wikiCardsChoice;
+            if(cardBlockCards){
+                let currentCardArr = cardBlockCards.Cards;
+                for(cardID in currentCardArr){
+                    let currentCard = Object.values(currentCardArr[cardID])[0];
+                    if(currentCard.includes(search)){
                         isSearched =  true;
                     }
                 }

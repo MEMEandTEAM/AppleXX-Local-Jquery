@@ -1126,6 +1126,12 @@ input[type=file] {
 
 /*! ВИКИ-2   ТАБЛИЧКА ПЕРСОНЖАЕЙ*/
 
+@media (max-width: 900px) {
+	.sortCardBtn{
+		display: none;
+	}
+}
+
 .justifyContent{
 	justify-content: space-around;
 }

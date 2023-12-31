@@ -1,7 +1,3 @@
-Карточки:
-- функция стрелочек для перемещения блоков
-
-
 
 <!-- * Меню карточек-->
 <div class="wikiCardsMenuPage container d-none">

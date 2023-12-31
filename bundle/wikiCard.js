@@ -318,8 +318,8 @@ $(() => {
             </div>
 			<div class="editMode border border-${ThemeSet.Primary} borderPrimary rounded col-12 container">
                 <div class="navBlockBtns col-sm-12 col-md-1 row">
-                    <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
-                    <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+                    <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'up')"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+                    <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'down')"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
                 </div>
                 <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 spoilerBtn linkPrimary link-${ThemeSet.Primary} ${spoilerActive}" onclick="toggleSpoiler(this)"><i class="fa fa-eye" aria-hidden="true"></i></button>
                 <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -350,8 +350,8 @@ $(() => {
             </p>
             <div class="editMode border borderPrimary border-${ThemeSet.Primary} rounded col-12 container">
                 <div class="navBlockBtns col-sm-12 col-md-1 row">
-                    <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
-                    <button class="btn btn-outline-${ThemeSet.Primary} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+                    <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'up')"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+                    <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'down')"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
                 </div>
                 <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary} ${spoilerActive}" onclick="toggleSpoiler(this)"><i class="fa fa-eye" aria-hidden="true"></i></button>
                 <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -402,8 +402,8 @@ $(() => {
             </div>
 			<div class="editMode border rounded border-${ThemeSet.Primary} borderPrimary col-12 container">
 			<div class="navBlockBtns col-sm-12 col-md-1 row">
-				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
-				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'up')"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'down')"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 			</div>
 			<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 spoilerBtn linkPrimary link-${ThemeSet.Primary} ${spoilerActive}" onclick="toggleSpoiler(this)"><i class="fa fa-eye" aria-hidden="true"></i></button>
 			<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -499,8 +499,8 @@ $(() => {
 			<div class="editMode border borderPrimary rounded border-${ThemeSet.Primary} col-12">
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 picAdd" onclick="addGalleryItem(this)"><i class="fa fa-plus" aria-hidden="true"></i></button>
 				<div class="navBlockBtns col-sm-12 col-md-1 row">
-					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
-					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'up')"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'down')"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 				</div>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary} ${spoilerActive}" onclick="toggleSpoiler(this)"><i class="fa fa-eye" aria-hidden="true"></i></button>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -564,8 +564,8 @@ $(() => {
 					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор из категории">Выбор из категории</option>
 				</select>
 				<div class="navBlockBtns col-sm-12 col-md-1 row">
-					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
-					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'up')"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'down')"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 				</div>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary} ${spoilerActive}" onclick="toggleSpoiler(this)"><i class="fa fa-eye" aria-hidden="true"></i></button>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -608,8 +608,8 @@ $(() => {
 					<option class="bg-dark2 bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор музыки">Выбор музыки</option>
 				</select>
 				<div class="navBlockBtns col-sm-12 col-md-1 row">
-					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
-					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'up')"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'down')"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 				</div>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary} ${spoilerActive}" onclick="toggleSpoiler(this)"><i class="fa fa-eye" aria-hidden="true"></i></button>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -645,8 +645,8 @@ $(() => {
 					${fullOptionSelectList(VideoDataAll,"video")}
 				</select>
 				<div class="navBlockBtns col-sm-12 col-md-1 row">
-					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
-					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'up')"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'down')"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 				</div>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary} ${spoilerActive}" onclick="toggleSpoiler(this)"><i class="fa fa-eye" aria-hidden="true"></i></button>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -678,8 +678,8 @@ $(() => {
 			<div class="editMode border rounded borderPrimary border-${ThemeSet.Primary} col-12">
 				<p class="youtubeLink col-12 link-${ThemeSet.Primary} borderPrimary linkPrimary border rounded border-${ThemeSet.Primary}" contenteditable="true" oninput="changeYoutubeBlockWiki(this)">${youtubeLink}</p>
 				<div class="navBlockBtns col-sm-12 col-md-1 row">
-					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
-					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'up')"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'down')"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 				</div>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary} ${spoilerActive}" onclick="toggleSpoiler(this)"><i class="fa fa-eye" aria-hidden="true"></i></button>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -767,8 +767,8 @@ $(() => {
 				</select>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-md-1 col-sm-12 navBlock" onclick="addCardBlockShort(this)"><i class="fa fa-plus" aria-hidden="true"></i></button>
 				<div class="navBlockBtns col-sm-12 col-md-1 row">
-					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
-					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'up')"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'down')"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 				</div>
 				<button class="btn btn-outline-${ThemeSet.Btn} linkPrimary btnOutlineBtn rounded col-12 spoilerBtn link-${ThemeSet.Primary} ${spoilerActive}" onclick="toggleSpoiler(this)"><i class="fa fa-eye" aria-hidden="true"></i></button>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -1077,6 +1077,27 @@ $(() => {
 	//----------------------------------
 	//* функции уже в блоках карточки
 
+	//* стрелочки в блоках
+	swapBlocks = (thisBlock,direction) =>{
+		let wikiBlock = $(thisBlock).parent().parent().parent();
+		let newWikiBlock;
+		switch (direction) {
+			case 'up':
+				newWikiBlock = wikiBlock.prev(".wikiBlock");
+				if(newWikiBlock.length != 0){
+					wikiBlock.insertBefore(newWikiBlock);
+				}
+				break;
+			case 'down':
+				newWikiBlock = wikiBlock.next(".wikiBlock");
+				if(newWikiBlock.length != 0){
+					wikiBlock.insertAfter(newWikiBlock);
+				}
+				break;
+			default:
+				break;
+		}
+	}
 
 	//* замена фотографии в постере и блоке картинка/текст
 	changeImgBlockWiki = (thisBlock,blockType) =>{
@@ -1251,7 +1272,7 @@ $(() => {
 		}
 	}
 
-	//! Спойлеры-----------------------------
+	//* Спойлеры-----------------------------
 
 	toggleSpoiler = (thisBlock) =>{
 		let BtnChange = $(thisBlock).toggleClass('used');

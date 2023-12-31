@@ -17,7 +17,6 @@ $(() => {
         return dataLoaded;
     }
 
-
     //----------------------------------------------------------------
     //? Элементы меню карточек
 
@@ -35,28 +34,6 @@ $(() => {
     let datalistOption = (value) =>{
         return `<option value="${value}" class="link-${ThemeSet.Primary} linkPrimary bgBack bg-${ThemeSet.Background}">`;
     }
-
-    //* функция добавления в datalist
-    datalistSearch = (typeSearch) =>{
-        $('#searchList').children().remove();
-        let dataListSmall = [];
-        let datalist = loadData(JSON.parse(localStorage.getItem('WikiPage')));
-        if(typeSearch == "Name"){
-            for(data in datalist){
-                let cardName = datalist[data][0].wikiPoster.posterName;
-                dataListSmall.push(datalistOption(cardName));
-            }
-        }
-        else{
-            let newDatalist = loadData(`${typeSearch}s`);
-            for(newData in newDatalist){
-                let newCardName = newDatalist[newData][0].wikiPoster.posterName;
-                dataListSmall.push(datalistOption(newCardName));
-            }
-        }
-        $(dataListSmall.join('')).appendTo('#searchList');
-    }
-
     
     //* страницы вики для селектора меню
     let selectWikiData = () =>{
@@ -131,7 +108,7 @@ $(() => {
 
                     <form class="mx-2 col-md-3 col-sm-12">
                         <label class="input-file">
-                            <input id="fileIn-chars" type="file" name="file">
+                            <input id="fileIn-Wiki" type="file" name="file" onchange="changeFileNameWiki(this.files[0])">
                             <span class="fileName btn btn-${ThemeSet.Btn} btnBtn h4">Выберите файл (Wiki.json)</span>
                         </label>
                     </form>
@@ -140,7 +117,7 @@ $(() => {
                         <h3>Загрузить вики <i class="fa fa-upload" aria-hidden="true"></i> </h3>
                     </button>
                 </div>
-
+                <h4 class="link-${ThemeSet.Primary} linkPrimary d-inline-flex justify-content-center">Карточки: <p class="cardsCount mx-2"></p></h4>
 			</div>
             `
         );
@@ -151,7 +128,7 @@ $(() => {
         return(
         `
         
-        <div class="wikiCardFull border border-${ThemeSet.Primary} rounded borderPrimary" style="width: 18rem;" onclick="openWikiCard('${cardCategory}',${cardID})">
+        <div class="wikiCardFull border border-${ThemeSet.Primary} rounded borderPrimary" style="width: 18rem;" ondblclick="openWikiCard('${cardCategory}',${cardID})">
 			<p class="d-none cardID">${cardID}</p>
 			<p class="d-none cardCategory">${cardCategory}</p>
 			<div class="wikiCard rounded">
@@ -188,22 +165,86 @@ $(() => {
     //----------------------------------------------------------------
     //? работа скриптов меню карточек
 
+    //* функция добавления в datalist
+    datalistSearch = (typeSearch) =>{
+        $('#searchList').children().remove();
+        let dataListSmall = [];
+        let datalist = loadData(JSON.parse(localStorage.getItem('WikiPage')));
+        if(typeSearch == "Name"){
+            for(data in datalist){
+                let cardName = datalist[data][0].wikiPoster.posterName;
+                dataListSmall.push(datalistOption(cardName));
+            }
+        }
+        else{
+            let newDatalist = loadData(`${typeSearch}s`);
+            for(newData in newDatalist){
+                let newCardName = newDatalist[newData][0].wikiPoster.posterName;
+                dataListSmall.push(datalistOption(newCardName));
+            }
+        }
+        $(dataListSmall.join('')).appendTo('#searchList');
+        
+        //КРИНЖ
+        sortWikiСard();
+    }
 
-    //! скачать данные вики
+    //* поиск карточки
+    findNameCards = (searchType,search) =>{
+        let wikiPanelType = $('.wikiPanelType').text();
+        checkCardPanel(wikiPanelType,search);
+    }
+
+
+    //* скачать данные вики
     downloadWikiData = () =>{
         let wikiDataFull = {};
         for(wikiPage in wikiPages){
             let wikiData = JSON.parse(localStorage.getItem(`Wiki-${wikiPage}`));
             wikiDataFull[wikiPage] = wikiData;
         }
-        console.log(wikiDataFull);
+        //console.log(wikiDataFull);
+
+        let blob = new File([JSON.stringify(wikiDataFull)], {
+            type: "application/json",
+        });
+
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.setAttribute("download", `Wiki.json`);
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
     }
 
-    //! загрузить данные вики
+    //* Проверка файла вики
+    changeFileNameWiki = (file) =>{
+        $('.fileName').text(file.name);
+    }
+
+    //* загрузить данные вики
     uploadWikiData = () =>{
+        let fileData = document.getElementById(`fileIn-Wiki`).files[0];
+        if(fileData == undefined){
+            return;
+        }
+        if(fileData.name != `Wiki.json`){
+            alert(`Закиньте нужный файл: Wiki.json`);
+        }
+        let Freader = new FileReader();
+        Freader.readAsText(fileData);
+        Freader.onload = () =>{
+            let dataLoadAll = JSON.parse(Freader.result);
+            console.log(dataLoadAll);
 
+            for(wikiPage in dataLoadAll){
+                let wikiData = dataLoadAll[wikiPage];
+                localStorage.setItem(`Wiki-${wikiPage}`,JSON.stringify(wikiData));
+            }
+            let page = JSON.parse(localStorage.getItem('WikiPage'));
+            checkCardPanel(page,'');
+        }
     }
-
 
     //*смена категорий в localstorage
     changeCardsData = (page) =>{
@@ -212,56 +253,13 @@ $(() => {
         changeCardsDataFunc();
     }
 
-    //* смена категорий в меню карточек
-    changeCardsDataFunc = () =>{
-        let page = JSON.parse(localStorage.getItem('WikiPage'));
-        let wikiPageStr = wikiPages[page];
-        $('.wikiCategoryName').text(`${wikiPageStr}`);
-        $('.wikiPanelType').text(`${page}`);
-        $('.wikiCardsMenu').remove();
-        //обновление меню карточек (КРИНЖ)
-        $(cardsMenuTab()).appendTo('.wikiCardsMenuPage');
-        checkCardPanel(page,'');
-        
-    }
-
-    //* подфункция для считывания
-    let sortSearch = (search,cardFull) =>{
-        let isSearched = false;
-        for(cardBlockId in cardFull){
-
-            //* Проверка по выбору текста
-            let cardBlockText = cardFull[cardBlockId].wikiTextChoice;
-            if(cardBlockText){
-                let currentTextArr = cardBlockText.wikiTextArr;
-                for(textID in currentTextArr){
-                    let currentText = Object.values(currentTextArr[textID])[0];
-                    if(currentText.includes(search)){
-                        isSearched =  true;
-                    }
-                }
-            }
-
-            //* Проверка по карточке
-            let cardBlockCards = cardFull[cardBlockId].wikiCardsChoice;
-            if(cardBlockCards){
-                let currentCardArr = cardBlockCards.Cards;
-                for(cardID in currentCardArr){
-                    let currentCard = Object.values(currentCardArr[cardID])[0];
-                    if(currentCard.includes(search)){
-                        isSearched =  true;
-                    }
-                }
-            }
-        }
-        return isSearched;
-    }
-
-    //* удаление строчки при наличии карточек и обнова карточек
+    //* обнова карточек (удаление строчки при наличии карточек)
     checkCardPanel = (page,search) =>{
         let searchType = $('.menuSearchCategory').val();
         
         if(localStorage.getItem(`Wiki-${page}`) == '[]'){
+            //* Счет карточек КРИНЖ
+            $('.cardsCount').text(0);
             return;
         }
         $('.wikiCardsMenu').children('.wikiCardFull').remove();
@@ -298,12 +296,67 @@ $(() => {
                 }
             }
         }
+        
+        //* Проверка наличия пустой строки
         if($('.wikiCardsMenu').children('.wikiCardFull').length != 0){
             $('.wikiNoCards').addClass('d-none');
         }
         else{
             $('.wikiNoCards').removeClass('d-none');
         }
+
+        //*Счёт количества карточек
+        if($('.wikiCardsMenu').children('.wikiCardFull').length != 0){
+            cardCount = $('.wikiCardsMenu').children('.wikiCardFull').length;
+            $('.cardsCount').text(cardCount);
+        }
+    }
+
+    //* смена категорий в меню карточек
+    changeCardsDataFunc = () =>{
+        let page = JSON.parse(localStorage.getItem('WikiPage'));
+        let wikiPageStr = wikiPages[page];
+        $('.wikiCategoryName').text(`${wikiPageStr}`);
+        $('.wikiPanelType').text(`${page}`);
+        $('.wikiCardsMenu').remove();
+        //обновление меню карточек (КРИНЖ)
+        $(cardsMenuTab()).appendTo('.wikiCardsMenuPage');
+        checkCardPanel(page,'');
+        //КРИНЖ
+        sortWikiСard();
+        
+    }
+
+    //* подфункция для считывания
+    let sortSearch = (search,cardFull) =>{
+        let isSearched = false;
+        for(cardBlockId in cardFull){
+
+            //* Проверка по выбору текста
+            let cardBlockText = cardFull[cardBlockId].wikiTextChoice;
+            if(cardBlockText){
+                let currentTextArr = cardBlockText.wikiTextArr;
+                for(textID in currentTextArr){
+                    let currentText = Object.values(currentTextArr[textID])[0];
+                    if(currentText.includes(search)){
+                        isSearched =  true;
+                    }
+                }
+            }
+
+            //* Проверка по карточке
+            let cardBlockCards = cardFull[cardBlockId].wikiCardsChoice;
+            if(cardBlockCards){
+                let currentCardArr = cardBlockCards.Cards;
+                for(cardID in currentCardArr){
+                    let currentCard = Object.values(currentCardArr[cardID])[0];
+                    if(currentCard.includes(search)){
+                        isSearched =  true;
+                    }
+                }
+            }
+        }
+        return isSearched;
     }
 
     //* добавление карточки в меню
@@ -314,15 +367,47 @@ $(() => {
         checkCardPanel(wikiPanelType,'');
     }
 
-    //* поиск карточки
-    findNameCards = (searchType,search) =>{
-        let wikiPanelType = $('.wikiPanelType').text();
-        checkCardPanel(wikiPanelType,search);
+
+
+    //*------------------------------------- ui sortable
+
+    //* Сортировка карточек
+    let sortWikiСard = () =>{
+        $(`.wikiCardsMenu`).sortable(
+            {
+                stop: () => {
+                    getSortedWikis();
+                }
+            }
+        );
+        
+        if($('.menuSearchCategory').val() != "Name"){
+            $(`.wikiCardsMenu`).sortable("destroy");
+        }
+    }
+    
+    //* Сохранение сортировки карточек
+    let getSortedWikis = () =>{
+        let wikiPage = JSON.parse(localStorage.getItem('WikiPage'));
+        let oldCardList = loadData(wikiPage);
+        let currCardListHTML = $('.wikiCardsMenu').find('.wikiCardFull');
+        let currCardList = [];
+        for(cardIDAll in currCardListHTML){
+            let cardIDHTML = Number(cardIDAll);
+            if(Number.isInteger(cardIDHTML)){
+                let currCardID = $(currCardListHTML[cardIDHTML]).find('.cardID').text();
+                let currCardData = oldCardList[currCardID];
+                currCardList.push(currCardData);
+            }
+        }
+        localStorage.setItem(`Wiki-${wikiPage}`,JSON.stringify(currCardList));
+        checkCardPanel(wikiPage,'');
     }
 
     //----------------------------------------------------------------
     allFunctionsDelay = () =>{
         changeCardsData(JSON.parse(localStorage.getItem('WikiPage')));
+        sortWikiСard();
     }
 
 	//* фул меню карточек

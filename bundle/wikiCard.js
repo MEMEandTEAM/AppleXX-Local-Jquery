@@ -166,6 +166,10 @@ $(() => {
 					<h5>Точно удалить? <i class="fa fa-trash" aria-hidden="true"></i></h5>
 				</button>
 
+				<button onclick="toggleSortMode()" class="editMode sortCardBtn btn btn-outline-${ThemeSet.Btn} btnOutlineBtn link-${ThemeSet.Primary} linkPrimary col-12 menuNote">
+					<h5><i class="fa fa-sort" aria-hidden="true"></i></h5>
+				</button>
+
 				<div class="d-none wikiID">${wikiID}</div>
 				<div class="d-none wikiCategory">${wikiCategory}</div>
 			</div>        
@@ -175,6 +179,7 @@ $(() => {
     //* открытая карточка
     openCardWiki = (wikiCategory,wikiID) =>{
 		let openCardFull = [];
+		let cardPoster;
 		let CardData = loadData(wikiCategory)[wikiID];
 		for(wikiBlockID in CardData){
 			let wikiBlock = CardData[wikiBlockID];
@@ -182,7 +187,7 @@ $(() => {
 			let blockElem = wikiBlock[blockType];
 			switch (blockType) {
 				case "wikiPoster":
-					openCardFull.push(cardPosterBlock(wikiCategory,blockElem['posterName'],blockElem['posterText'],blockElem['posterImg'],blockElem['underPosterText']));
+					cardPoster = cardPosterBlock(wikiCategory,blockElem['posterName'],blockElem['posterText'],blockElem['posterImg'],blockElem['underPosterText']);
 					break;
 				case "wikiName":
 					openCardFull.push(cardNameBlock(blockElem['wikiName'],blockElem['isSpoiler'],wikiBlockID));
@@ -216,6 +221,9 @@ $(() => {
 			}
 		}
         return(`
+			<div class="wikiOpenCardPoster row containter">
+				${cardPoster}
+			</div>
 			<div class="wikiOpenCard row container">
 				${openCardFull.join('')}
 			</div>
@@ -294,8 +302,10 @@ $(() => {
 
     let cardNameBlock = (wikiName,isSpoiler,blockID) =>{
         let spoilerCheck = "";
+		let spoilerActive = "";
 		if(isSpoiler == true){
 			spoilerCheck = "spoilerBlur";
+			spoilerActive = "used";
 		}
 
 		return(`
@@ -311,11 +321,11 @@ $(() => {
                     <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
                     <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
                 </div>
-                <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 spoilerBtn linkPrimary link-${ThemeSet.Primary}" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+                <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 spoilerBtn linkPrimary link-${ThemeSet.Primary} ${spoilerActive}" onclick="toggleSpoiler(this)"><i class="fa fa-eye" aria-hidden="true"></i></button>
                 <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
             </div>
             <div class="spoilerBlock">
-                <h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="">Спойлер</h4>
+                <h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="openSpoiler(this)">Спойлер</h4>
             </div>
         </div>
         
@@ -324,8 +334,10 @@ $(() => {
 
     let cardTextBlock = (wikiText,isSpoiler,blockID) =>{
         let spoilerCheck = "";
+		let spoilerActive = "";
 		if(isSpoiler == true){
 			spoilerCheck = "spoilerBlur";
+			spoilerActive = "used";
 		}
 		
 		return(`
@@ -341,11 +353,11 @@ $(() => {
                     <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
                     <button class="btn btn-outline-${ThemeSet.Primary} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
                 </div>
-                <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary}" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+                <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary} ${spoilerActive}" onclick="toggleSpoiler(this)"><i class="fa fa-eye" aria-hidden="true"></i></button>
                 <button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
             </div>
             <div class="spoilerBlock">
-                <h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="">Спойлер</h4>
+                <h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="openSpoiler(this)">Спойлер</h4>
             </div>
         </div>
         
@@ -354,8 +366,10 @@ $(() => {
 
     let cardPicTextBlock = (wikiText,wikiPic,wikiTextUnder,isSpoiler,blockID) =>{
         let spoilerCheck = "";
+		let spoilerActive = "";
 		if(isSpoiler == true){
 			spoilerCheck = "spoilerBlur";
+			spoilerActive = "used";
 		}
 		
 		return(`
@@ -391,11 +405,11 @@ $(() => {
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 			</div>
-			<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 spoilerBtn linkPrimary link-${ThemeSet.Primary}" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+			<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 spoilerBtn linkPrimary link-${ThemeSet.Primary} ${spoilerActive}" onclick="toggleSpoiler(this)"><i class="fa fa-eye" aria-hidden="true"></i></button>
 			<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</div>
             <div class="spoilerBlock">
-                <h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="">Спойлер</h4>
+                <h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="openSpoiler(this)">Спойлер</h4>
             </div>
         </div>
         
@@ -448,8 +462,10 @@ $(() => {
 
     let cardGalleryBlock = (Gallery,isSpoiler,blockID) =>{
 		let spoilerCheck = "";
+		let spoilerActive = "";
 		if(isSpoiler == true){
 			spoilerCheck = "spoilerBlur";
+			spoilerActive = "used";
 		}
 		
 		let picItemList = [];
@@ -486,11 +502,11 @@ $(() => {
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 				</div>
-				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary}" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary} ${spoilerActive}" onclick="toggleSpoiler(this)"><i class="fa fa-eye" aria-hidden="true"></i></button>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</div>
 			<div class="spoilerBlock">
-				<h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="">Спойлер</h4>
+				<h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="openSpoiler(this)">Спойлер</h4>
 			</div>
 		</div>
 
@@ -513,8 +529,10 @@ $(() => {
 
     let cardTextChoiceBlock = (wikiTextArr,isSpoiler,blockID) =>{
         let spoilerCheck = "";
+		let spoilerActive = "";
 		if(isSpoiler == true){
 			spoilerCheck = "spoilerBlur";
+			spoilerActive = "used";
 		}
 
 		let wikiTextArrFull = [];
@@ -549,11 +567,11 @@ $(() => {
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 				</div>
-				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary}" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary} ${spoilerActive}" onclick="toggleSpoiler(this)"><i class="fa fa-eye" aria-hidden="true"></i></button>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</div>
 			<div class="spoilerBlock">
-				<h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="">Спойлер</h4>
+				<h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="openSpoiler(this)">Спойлер</h4>
 			</div>
 		</div>
 
@@ -563,8 +581,10 @@ $(() => {
 
     let cardAudioBlock = (musicName,musicLink,isSpoiler,blockID) =>{
         let spoilerCheck = "";
+		let spoilerActive = "";
 		if(isSpoiler == true){
 			spoilerCheck = "spoilerBlur";
+			spoilerActive = "used";
 		}
 		
 		return(`
@@ -591,11 +611,11 @@ $(() => {
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 				</div>
-				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary}" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary} ${spoilerActive}" onclick="toggleSpoiler(this)"><i class="fa fa-eye" aria-hidden="true"></i></button>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</div>
 			<div class="spoilerBlock">
-				<h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="">Спойлер</h4>
+				<h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="openSpoiler(this)">Спойлер</h4>
 			</div>
 		</div>
         
@@ -604,8 +624,10 @@ $(() => {
 
     let cardVideoBlock = (videoName,VideoLink,isSpoiler,blockID) =>{
         let spoilerCheck = "";
+		let spoilerActive = "";
 		if(isSpoiler == true){
 			spoilerCheck = "spoilerBlur";
+			spoilerActive = "used";
 		}
 		
 		return(`
@@ -626,11 +648,11 @@ $(() => {
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 				</div>
-				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary}" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary} ${spoilerActive}" onclick="toggleSpoiler(this)"><i class="fa fa-eye" aria-hidden="true"></i></button>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</div>
 			<div class="spoilerBlock">
-				<h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="">Спойлер</h4>
+				<h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="openSpoiler(this)">Спойлер</h4>
 			</div>
 		</div>
         
@@ -639,8 +661,10 @@ $(() => {
 
     let cardYoutubeBlock = (youtubeName,youtubeLink,isSpoiler,blockID) =>{
         let spoilerCheck = "";
+		let spoilerActive = "";
 		if(isSpoiler == true){
 			spoilerCheck = "spoilerBlur";
+			spoilerActive = "used";
 		}
 		
 		return(`
@@ -657,11 +681,11 @@ $(() => {
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 				</div>
-				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary}" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn linkPrimary rounded col-12 spoilerBtn link-${ThemeSet.Primary} ${spoilerActive}" onclick="toggleSpoiler(this)"><i class="fa fa-eye" aria-hidden="true"></i></button>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</div>
 			<div class="spoilerBlock">
-				<h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="">Спойлер</h4>
+				<h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="openSpoiler(this)">Спойлер</h4>
 			</div>
 		</div>
         
@@ -699,8 +723,10 @@ $(() => {
 
     let cardCardsBlock = (cardsArr,isSpoiler,blockID) =>{
         let spoilerCheck = "";
+		let spoilerActive = "";
 		if(isSpoiler == true){
 			spoilerCheck = "spoilerBlur";
+			spoilerActive = "used";
 		}
 
 		//*Проход по карточкам (где карточка идет как БД:Имя карточки)
@@ -723,7 +749,6 @@ $(() => {
 
 		
 		return(`
-        
         <div class="row wikiBlock wikiCardsChoice ${spoilerCheck}">
 			<p class="d-none isSpoilerBlock">${isSpoiler}</p>
 			<p class="d-none wikiBlockID">${blockID}</p>
@@ -745,16 +770,13 @@ $(() => {
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick=""><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 				</div>
-				<button class="btn btn-outline-${ThemeSet.Btn} linkPrimary btnOutlineBtn rounded col-12 spoilerBtn link-${ThemeSet.Primary}" onclick=""><i class="fa fa-eye" aria-hidden="true"></i></button>
+				<button class="btn btn-outline-${ThemeSet.Btn} linkPrimary btnOutlineBtn rounded col-12 spoilerBtn link-${ThemeSet.Primary} ${spoilerActive}" onclick="toggleSpoiler(this)"><i class="fa fa-eye" aria-hidden="true"></i></button>
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</div>
 			<div class="spoilerBlock">
 				<h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="">Спойлер</h4>
 			</div>
 		</div>
-        
-
-        
         `);
     }
 
@@ -783,6 +805,7 @@ $(() => {
 		//КРИНЖ
 		$('.editMode').toggleClass('d-none');
 		isEdit = false;
+		isSort = false;
 	}
 
 	//* открытия меню карточек
@@ -791,6 +814,8 @@ $(() => {
 		$(menuCardsFull()).appendTo('.app');
 		changeCardsData(wikiCategory);
 		isEdit = false;
+		isSort = false;
+		allFunctionsDelay();
 	}
 
 	let isEdit = false;
@@ -814,9 +839,16 @@ $(() => {
 		else{
 			$('.editText').attr('contenteditable','false');
 		}
+
+		if(isEdit == true){
+			$('.spoilerBlur').addClass('spoilerBlurOpen');
+		}
+		else{
+			$('.spoilerBlur').removeClass('spoilerBlurOpen');
+		}
     }
 
-	//? добавление блока в карточку
+	//* добавление блока в карточку
 	addBlockWiki = (wikiCategory,wikiID,wikiBlock) =>{
 		//let wikiData = loadData(wikiCategory);
 		//let wikiDataObj = wikiData[wikiID];
@@ -899,8 +931,11 @@ $(() => {
 		for (let i = 0; i < wikiBlockLength; i++) {
 			let wikiBlock = wikiBlocksFull[i];
 			let wikiBlockType = wikiBlock.classList[2];
-			
-			//!
+			let spolierCheckVal = $(wikiBlock).find('.isSpoilerBlock').text();
+			let spolerSet = false;
+			if(spolierCheckVal == "true"){
+				spolerSet = true;
+			}
 			switch(wikiBlockType){
 				case "wikiPoster":
 					let posterName = $(wikiBlock).find('.posterName').text();
@@ -918,7 +953,7 @@ $(() => {
 					let wikiName = $(wikiBlock).find('.wikiNameText').text();
 					wikiDataObj.push({wikiName:{
 							wikiName: wikiName, 
-							isSpoiler:false
+							isSpoiler:spolerSet
 						}
 					});
 					break;
@@ -926,7 +961,7 @@ $(() => {
 					let wikiText = $(wikiBlock).find('.wikiTextTxt').html();
 					wikiDataObj.push({wikiText:{
 							wikiText: wikiText, 
-							isSpoiler:false
+							isSpoiler:spolerSet
 						}
 					});
 					break;
@@ -938,7 +973,7 @@ $(() => {
 							wikiText: wikiPicText,
 							wikiPic: wikiPic,
 							wikiTextUnder: wikiPicTextUnder, 
-							isSpoiler:false
+							isSpoiler:spolerSet
 						}
 					});
 					break;
@@ -948,7 +983,7 @@ $(() => {
 					wikiDataObj.push({wikiVideo:{
 							videoName: wikiVideoName,
 							VideoLink: wikiVideo,
-							isSpoiler:false
+							isSpoiler:spolerSet
 						}
 					},);
 					break;
@@ -958,7 +993,7 @@ $(() => {
 					wikiDataObj.push({wikiMusic:{
 							musicLink: wikiMusic,
 							musicName: wikiMusicName,
-							isSpoiler:false
+							isSpoiler:spolerSet
 						}
 					});
 					break;
@@ -968,7 +1003,7 @@ $(() => {
 					wikiDataObj.push({wikiYoutube:{
 							youtubeName: wikiYoutubeName,
 							youtubeLink: wikiYoutube,
-							isSpoiler:false
+							isSpoiler:spolerSet
 						}
 					});
 					break;
@@ -990,7 +1025,7 @@ $(() => {
 
 					wikiDataObj.push({wikiGallery:{
 							Gallery: galleryArr, 
-							isSpoiler:false,
+							isSpoiler:spolerSet,
 						}
 					});
 					break;
@@ -1008,7 +1043,7 @@ $(() => {
 					}
 					wikiDataObj.push({wikiTextChoice:{
 							wikiTextArr: wikiTextArr, 
-							isSpoiler:false
+							isSpoiler:spolerSet
 						}
 					});
 					break;
@@ -1025,7 +1060,7 @@ $(() => {
 					}
 					wikiDataObj.push({wikiCardsChoice:{
 							Cards: wikiCardsArr, 
-							isSpoiler:false
+							isSpoiler:spolerSet
 						}
 					});
 					break;
@@ -1181,5 +1216,61 @@ $(() => {
 		blockWiki.remove();
 	}
 
+	//*UI SORTABLE-----------------------------
 
+	let rotateSortIcon = (degree) =>{
+		$('.sortCardBtn').children().css({ WebkitTransform: 'rotate(' + degree + 'deg)'});
+		$('.sortCardBtn').children().css({ '-moz-transform': 'rotate(' + degree + 'deg)'});
+	}
+
+	let isSort = false;
+	//* переключение сортировки
+    toggleSortMode = () =>{
+		if (isSort == false){
+			isSort = true;
+			rotateSortIcon(90);
+		}
+		else{
+			isSort = false;
+			rotateSortIcon(0);
+		}
+		sortWikiСardBlocks();
+        
+        //if($('.menuSearchCategory').val() != "Name"){
+            //$(`.wikiOpenCard`).sortable("destroy");
+        //}
+    }
+
+	//* Сортировка карточек
+	sortWikiСardBlocks = () =>{
+		if(isSort == true){
+			$(`.wikiOpenCard`).sortable();
+		}
+        else{
+			$(`.wikiOpenCard`).sortable("destroy");
+		}
+	}
+
+	//! Спойлеры-----------------------------
+
+	toggleSpoiler = (thisBlock) =>{
+		let BtnChange = $(thisBlock).toggleClass('used');
+		let blockWiki = $(thisBlock).parent().parent();
+		let spoilerData = $(blockWiki).find('.isSpoilerBlock').text();
+		if(spoilerData == "false"){
+			$(blockWiki).find('.isSpoilerBlock').text('true');
+			$(blockWiki).addClass('spoilerBlur');
+			$(blockWiki).addClass('spoilerBlurOpen');
+		}
+		else{
+			$(blockWiki).find('.isSpoilerBlock').text('false');
+			$(blockWiki).removeClass('spoilerBlur');
+			$(blockWiki).removeClass('spoilerBlurOpen');
+		}
+	}
+
+	openSpoiler = (thisBlock) =>{
+		let blockWiki = $(thisBlock).parent().parent();
+		blockWiki.addClass('spoilerBlurOpen');
+	}
 });

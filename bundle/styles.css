@@ -1036,8 +1036,13 @@ input[type=file] {
 
 /*! ВИКИ-2   КАРТОЧКА ПЕРСОНЖАЕЙ*/
 
+.cardFront,.cardBack{
+	max-height: 433px !important;
+}
+
 .wikiCardFull{
 	margin-bottom: 10px;
+	max-height: 435px !important;
 }
 
 .wikiCard{

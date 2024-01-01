@@ -188,8 +188,8 @@ const HometabDataAll = [
 	{
 		type: [HometabDataType.anime],
 		name: "Zetfix",
-		prev: "https://zetfix.online/favicon.ico",
-		link: "https://zetfix.online/",
+		prev: "https://1jan.zeflix.online/favicon.ico",
+		link: "https://1jan.zeflix.online/",
 		crossed: 0
 	},
 	{
@@ -489,7 +489,7 @@ const HometabDataAll = [
 		crossed: 0
 	},
 	{
-		type: [HometabDataType.writing],
+		type: [HometabDataType.writing,HometabDataType.gameDev],
 		name: "*v *o-tw PixAI.art",
 		prev: `https://pixai.art/favicon.ico`,
 		link: "https://pixai.art/",
@@ -568,7 +568,7 @@ const HometabDataAll = [
 	{
 		type: [HometabDataType.marks],
 		name: "Starrail Station",
-		prev: `https://pom.moe/favicon.png`,
+		prev: `https://starrailstation.com/favicon.ico`,
 		link: "https://starrailstation.com/ru",
 		crossed: 0
 	},
@@ -577,6 +577,97 @@ const HometabDataAll = [
 		name: "GPT chatbot",
 		prev: `https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/1024px-ChatGPT_logo.svg.png`,
 		link: "https://gpt-chatbot.ru/",
+		crossed: 0
+	},
+	{
+		type: [HometabDataType.marks],
+		name: "Open VPN's",
+		prev: `https://avatars.githubusercontent.com/u/1569141?s=200&v=4`,
+		link: "https://www.freeopenvpn.org/index.php?lang=ru",
+		crossed: 0
+	},
+	{
+		type: [HometabDataType.webCrafting],
+		name: "Semantic UI",
+		prev: `https://semantic-ui.com/images/logo.png`,
+		link: "https://semantic-ui.com/",
+		crossed: 0
+	},
+	{
+		type: [HometabDataType.webCrafting],
+		name: "CSS clip",
+		prev: `https://bennettfeely.com/clippy/pics/favicon.png`,
+		link: "https://bennettfeely.com/clippy/",
+		crossed: 0
+	},
+	{
+		type: [HometabDataType.university],
+		name: "Антиплагиат",
+		prev: `https://textovod.com/favicon.svg`,
+		link: "https://textovod.com/unique",
+		crossed: 0
+	},
+	{
+		type: [HometabDataType.university],
+		name: "Антиплагиат 2",
+		prev: `https://www.etxt.ru/favicon.ico`,
+		link: "https://www.etxt.ru/antiplagiat/",
+		crossed: 0
+	},
+	{
+		type: [HometabDataType.torrents],
+		name: "NoTorFilms",
+		prev: `https://notorfilms.org/wp-content/uploads/2022/07/cropped-img_68309-192x192.png`,
+		link: "https://notorfilms.org/",
+		crossed: 0
+	},
+	{
+		type: [HometabDataType.writing,HometabDataType.gameDev],
+		name: "IdeogramAI (art)",
+		prev: `https://ideogram.ai/favicon.svg`,
+		link: "https://ideogram.ai/login",
+		crossed: 0
+	},
+	{
+		type: [HometabDataType.marks],
+		name: "Ninite (apps)",
+		prev: `https://ninite.com/static/favicon-50c60524c110e749f013a1ca48f80b80.png`,
+		link: "https://ninite.com/",
+		crossed: 0
+	},
+	{
+		type: [HometabDataType.marks],
+		name: "Антизапрет (vpn)",
+		prev: `https://cdn-icons-png.flaticon.com/512/597/597356.png`,
+		link: "https://antizapret.prostovpn.org/",
+		crossed: 0
+	},
+	{
+		type: [HometabDataType.LoL],
+		name: "KILLERSKINS",
+		prev: `https://i0.wp.com/killerskins.com/wp-content/uploads/2021/07/logo_killerskins-2021.png`,
+		link: "https://killerskins.com",
+		crossed: 0
+	},
+	{
+		type: [HometabDataType.marks],
+		name: "Leak Check",
+		prev: `https://leakcheck.io/img/logo.png`,
+		link: "https://leakcheck.io/",
+		crossed: 0
+	},
+	{
+		type: [HometabDataType.useful,HometabDataType.webCrafting],
+		name: "Metanit c++",
+		prev: `https://sun9-18.userapi.com/impf/c633530/v633530343/21a1b/lq9pdmdMXm4.jpg?size=302x302&quality=96&sign=1bf4d72d96c1c4d57639ec9cf3d2ccd6&type=album`,
+		link: "https://metanit.com/",
+		crossed: 0
+	},
+	{
+		type: [HometabDataType.useful,HometabDataType.writing],
+		name: "Ridreo",
+		prev: `https://ridero.ru/landings-assets/icon.svg`,
+		link: "https://ridero.ru/",
 		crossed: 0
 	},
 

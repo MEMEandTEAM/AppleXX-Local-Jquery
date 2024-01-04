@@ -193,6 +193,7 @@ $(() => {
     findNameCards = (searchType,search) =>{
         let wikiPanelType = $('.wikiPanelType').text();
         checkCardPanel(wikiPanelType,search);
+        sortWikiСard();
     }
 
 
@@ -380,10 +381,10 @@ $(() => {
                 }
             }
         );
-        
-        if($('.menuSearchCategory').val() != "Name"){
+        if($('.menuSearchCategory').val() != "Name"||$('.wikiSearch').children().val()){
             $(`.wikiCardsMenu`).sortable("destroy");
         }
+
     }
     
     //* Сохранение сортировки карточек

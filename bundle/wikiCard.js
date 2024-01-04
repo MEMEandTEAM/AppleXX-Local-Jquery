@@ -66,7 +66,6 @@ $(() => {
 			case "music":
 				for(select in selectList){
 					let selectObject = selectList[select];
-
 					//КРИНЖ
 					let musicType = selectObject.type2;
 					let musicString = `./assets/music/${musicType}/${selectObject.mp3}`;
@@ -81,8 +80,8 @@ $(() => {
 				break;
 			case "text":
 				for(select in selectList){
-					let textChoiceObject = selectList[select];
-					optionList.push(optionSelect(textChoiceObject,textChoiceObject,false))
+					let cardChoiceObject = selectList[select];
+					optionList.push(optionSelect(cardChoiceObject,cardChoiceObject,false))
 				}
 			case "card":
 				for(select in selectList){
@@ -123,9 +122,10 @@ $(() => {
 				let textChoiceBlock = blockWiki.parent().children('.subTextChoiceSelect');
 				textChoiceBlock.children().remove();
 				optionList = `
-					${optionSelect("Выбор из категории","Выбор из категории",true)}
-					${fullOptionSelectList(wikiTextChoiceOptions[blockVal],"text")}
+					${optionSelect("Выбор текста","Выбор текста",true)}
+					${fullOptionSelectList(wikiTextChoiceOptions[blockVal],"card")}
 				`;
+				//${fullOptionSelectList(wikiTextChoiceOptions[blockVal],"card")}
 				$(optionList).appendTo(textChoiceBlock);
 				break;
 			case "card":
@@ -427,7 +427,7 @@ $(() => {
 		}
 
 		if(isEdit == true){
-			editText = `contenteditable="True"`
+			editText = `contenteditable="true"`
 		}
 
 
@@ -561,7 +561,7 @@ $(() => {
 				</select>
 					
 				<select class="subTextChoiceSelect link-${ThemeSet.Background} linkBack col-md-5 mx-2 col-sm-11 bgSecond bg-${ThemeSet.SecondBackground}" onchange="">
-					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор из категории">Выбор из категории</option>
+					<option class="bg-${ThemeSet.BodyBackground} bgBody link-${ThemeSet.Primary} linkPrimary" selected value="Выбор текста">Выбор текста</option>
 				</select>
 				<div class="navBlockBtns col-sm-12 col-md-1 row">
 					<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-6 navBlock" onclick="swapBlocks(this,'up')"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
@@ -635,7 +635,7 @@ $(() => {
         <div class="row wikiBlock wikiVideo ${spoilerCheck}">
 			<div class="d-none isSpoilerBlock">${isSpoiler}</div>
 			<div class="d-none wikiBlockID">${blockID}</div>
-			<h2 class="h2 col-12 link-${ThemeSet.Primary} linkPrimary text-center localVideoName editText wikiVideoName" contenteditable="false">${videoName}</h2>
+			<h3 class="h3 col-12 link-${ThemeSet.Primary} linkPrimary text-center localVideoName editText wikiVideoName" contenteditable="false">${videoName}</h3>
 			<video class="localVideo" src="${VideoLink}" controls></video>
 			<div class="d-none videoLinkSave">${VideoLink}</div>
 
@@ -672,7 +672,7 @@ $(() => {
         <div class="row wikiBlock wikiYoutube ${spoilerCheck}">
 			<div class="d-none isSpoilerBlock">${isSpoiler}</div>
 			<div class="d-none wikiBlockID">${blockID}</div>
-			<h2 class="h2 col-12 link-${ThemeSet.Primary} linkPrimary text-center localYoutubeName editText wikiVideoName" contenteditable="false">${youtubeName}</h2>
+			<h3 class="h3 col-12 link-${ThemeSet.Primary} linkPrimary text-center localYoutubeName editText wikiVideoName" contenteditable="false">${youtubeName}</h3>
 			<iframe class="youtubeVideo" title="YouTube video player" allowfullscreen="" width="500" height="350" frameborder="0" src="${youtubeLink}"></iframe>
 			<div class="d-none youtubeLinkSave">${youtubeLink}</div>
 			<div class="editMode border rounded borderPrimary border-${ThemeSet.Primary} col-12">
@@ -691,7 +691,6 @@ $(() => {
         
         `);
     }
-
 
 	//* карточка
     let wikiCard = (posterImg,posterName,posterText,cardID,cardCategory) =>{
@@ -774,8 +773,8 @@ $(() => {
 				<button class="btn btn-outline-${ThemeSet.Btn} btnOutlineBtn rounded col-12 deleteBlock" onclick="deleteBlockWiki(this)"><i class="fa fa-trash" aria-hidden="true"></i></button>
 			</div>
 			<div class="spoilerBlock">
-				<h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="">Спойлер</h4>
-			</div>
+                <h4 class="link-${ThemeSet.Primary} linkPrimary" onclick="openSpoiler(this)">Спойлер</h4>
+            </div>
 		</div>
         `);
     }
@@ -795,12 +794,13 @@ $(() => {
     }
     
     //----------------------------------------------------------------
-	//? работа скриптов открытой карточки
+	//* работа скриптов открытой карточки
 
-	//? открытие карточки
+	//* открытие карточки
 	openWikiCard = (category,cardID) =>{
 		$('.app').children().remove();
 		$(fullOpenCardWiki(category,cardID)).appendTo('.app');
+		localStorage.setItem("WikiPage",JSON.stringify(category));
 		
 		//КРИНЖ
 		$('.editMode').toggleClass('d-none');
@@ -819,7 +819,7 @@ $(() => {
 	}
 
 	let isEdit = false;
-    //? вкл/выкл режим редактирования
+    //* вкл/выкл режим редактирования
     toggleEditMode = () =>{
 		$('.editMode').toggleClass('d-none');
 		$('.editCardBtn').toggleClass('used');
@@ -1154,7 +1154,13 @@ $(() => {
 		let blockVal = blockWiki.text();
 		let blockYoutube = blockWiki.parent().parent().children('iframe');
 		let standartYoutubeStr = "https://www.youtube.com/watch?v=";
-		let newYoutubeStr = `https://www.youtube.com/embed/${blockVal.replace(standartYoutubeStr,'')}`;
+		let newYoutubeStr;
+		if(blockVal.includes(standartYoutubeStr)){
+			newYoutubeStr = `https://www.youtube.com/embed/${blockVal.replace(standartYoutubeStr,'')}`;
+		}
+		else{
+			newYoutubeStr = blockVal;
+		}
 		blockYoutube.attr('src',newYoutubeStr);
 		let blockYoutubeLink = blockWiki.parent().parent().children('.youtubeLinkSave');
 		blockYoutubeLink.text(newYoutubeStr);

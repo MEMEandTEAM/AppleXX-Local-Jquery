@@ -1070,6 +1070,7 @@ input[type=file] {
 	align-items: center;
 	justify-content: flex-start;
 	padding-left: 1rem;
+	padding-right: 1rem;
 	word-wrap: break-word;
 	transform: rotateY(180deg);
 	transition: transform .6s linear;
@@ -1096,7 +1097,9 @@ input[type=file] {
 	height: 20%;
 	display: flex;
 	align-items: center;
+	padding-top: 1rem;
 	padding-left: 1rem;
+	padding-right: 2rem;
 	word-wrap: break-word;
 }
 
